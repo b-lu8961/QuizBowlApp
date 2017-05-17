@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="app.bryanlu.quizbowl.PlayFragment">
+
+    <TextView
+        android:id="@+id/usernameText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/user_prefix"
+        android:textSize="14sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/categoriesButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/scoreText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/score"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="5dp" />
+
+    <Button
+        android:id="@+id/categoriesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:text="@string/categories"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
+
+    <app.bryanlu.quizbowl.QuestionReader
+        android:id="@+id/questionReader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:maxHeight="280dp"
+        android:maxLines="100"
+        android:scrollbars="vertical"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/geoImage" />
+
+    <TextView
+        android:id="@+id/answerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="@string/answer"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/questionReader" />
+
+    <EditText
+        android:id="@+id/answerEntry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="10"
+        android:imeOptions="actionDone"
+        android:inputType="textPersonName"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/mainButton"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
+
+    <ImageView
+        android:id="@+id/resultImageLeft"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:contentDescription="@string/result_image"
+        android:visibility="invisible"
+        app:layout_constraintRight_toLeftOf="@+id/answerEntry"
+        app:layout_constraintTop_toTopOf="@+id/answerEntry"
+        app:srcCompat="@drawable/correct" />
+
+    <ImageView
+        android:id="@+id/resultImageRight"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:contentDescription="@string/result_image"
+        android:visibility="invisible"
+        app:layout_constraintLeft_toRightOf="@+id/answerEntry"
+        app:layout_constraintTop_toTopOf="@+id/answerEntry"
+        app:srcCompat="@drawable/correct" />
+
+    <Button
+        android:id="@+id/mainButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/main"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/connectedText"
+        android:layout_marginLeft="66dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/connectedText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:gravity="center"
+        android:text="@string/connected"
+        android:visibility="visible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
+
+    <ImageView
+        android:id="@+id/bioImage"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="0dp"
+        android:contentDescription="@string/bioIcon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/categoriesButton"
+        app:srcCompat="@drawable/biology" />
+
+    <ImageView
+        android:id="@+id/chemImage"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:contentDescription="@string/chemIcon"
+        app:layout_constraintLeft_toRightOf="@+id/bioImage"
+        app:layout_constraintRight_toLeftOf="@+id/geoImage"
+        app:layout_constraintTop_toTopOf="@+id/bioImage"
+        app:srcCompat="@drawable/chemistry" />
+
+    <ImageView
+        android:id="@+id/geoImage"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginBottom="0dp"
+        android:contentDescription="@string/geoIcon"
+        app:layout_constraintBottom_toBottomOf="@+id/chemImage"
+        app:layout_constraintLeft_toRightOf="@+id/chemImage"
+        app:layout_constraintRight_toLeftOf="@+id/mathImage"
+        app:srcCompat="@drawable/geography" />
+
+    <ImageView
+        android:id="@+id/mathImage"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:contentDescription="@string/mathIcon"
+        app:layout_constraintLeft_toRightOf="@+id/geoImage"
+        app:layout_constraintRight_toLeftOf="@+id/physImage"
+        app:layout_constraintTop_toTopOf="@+id/geoImage"
+        app:srcCompat="@drawable/math" />
+
+    <ImageView
+        android:id="@+id/physImage"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:contentDescription="@string/physIcon"
+        app:layout_constraintBottom_toBottomOf="@+id/mathImage"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/physics" />
+
+    <Button
+        android:id="@+id/gameToggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/start_game"
+        android:visibility="visible"
+        app:layout_constraintLeft_toRightOf="@+id/mainButton"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/answerEntry" />
+
+</android.support.constraint.ConstraintLayout>
+

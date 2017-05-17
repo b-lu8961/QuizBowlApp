@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">QuizBowl</string>
+    <string name="signOut">Sign Out</string>
+    <string name="not_logged_in">Not logged in</string>
+    <string name="user_prefix">User:\u0020</string>
+    <string name="no_user">N/A</string>
+    <string name="change_username">Change Username:</string>
+    <string name="score">Score:\u0020</string>
+    <string name="total_score">Total score:\u0020</string>
+    <string name="questions_seen">Questions seen:\u0020</string>
+    <string name="questions_correct">Questions correct:\u0020</string>
+    <string name="questions_incorrect">Questions incorrect:\u0020</string>
+    <string name="reset_stats">RESET STATS</string>
+    <string name="stats_alert_title">Reset your stats?</string>
+    <string name="stats_alert_message">All your statistics will be set to 0.</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">CANCEL</string>
+    <string name="answer">Answer</string>
+    <string name="correct">CORRECT</string>
+    <string name="incorrect">INCORRECT</string>
+    <string name="result_image">Answer result image</string>
+    <string name="body">Body</string>
+    <string name="main">NEXT</string>
+    <string name="start_game">Start Game</string>
+    <string name="end_game">End Game</string>
+    <string name="connected">\u0020user(s) connected.</string>
+    <string name="no_connection">No connection</string>
+    <string name="categories">Choose Categories</string>
+    <string name="physKey">Phys&amp;Astro</string>
+    <string name="physFile">Phys&amp;Astro.txt</string>
+    <string name="physIcon">Physics icon</string>
+    <string name="geoKey">Geog</string>
+    <string name="geoFile">Geog.txt</string>
+    <string name="geoIcon">Geography icon</string>
+    <string name="bioKey">Bio</string>
+    <string name="bioFile">Bio.txt</string>
+    <string name="bioIcon">Biology icon</string>
+    <string name="chemKey">Chem&amp;Geol</string>
+    <string name="chemFile">Chem&amp;Geol.txt</string>
+    <string name="chemIcon">Chemistry icon</string>
+    <string name="mathKey">Math&amp;CS</string>
+    <string name="mathFile">Math&amp;CS.txt</string>
+    <string name="mathIcon">Math icon</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string-array name="drawer_options">
+        <item>Play</item>
+        <item>Account</item>
+        <item>Stats</item>
+    </string-array>
+</resources>

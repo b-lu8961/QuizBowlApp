@@ -1,0 +1,5 @@
+These things are used to make sure a program's logic is correct.
+In CS 125 and CS 126, the JUnit framework is used to implement these
+things. For 10 points, name this thing that shares its name with a
+method of evaluating a student's knowledge.
+ANSWER: tests
