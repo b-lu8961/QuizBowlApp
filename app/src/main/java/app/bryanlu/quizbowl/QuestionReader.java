@@ -68,7 +68,7 @@ public class QuestionReader extends AppCompatTextView {
      * @param currentQuestion the question to read
      */
     void read(Question currentQuestion) {
-        questionText = currentQuestion.getBody().split(" ");
+        questionText = currentQuestion.getQuestion().split(" ");
         wordIndex = 0;
         textToDisplay = "";
         isRunning = true;
@@ -95,7 +95,7 @@ public class QuestionReader extends AppCompatTextView {
      * @param currentIndex spot at which to resume
      */
     void resume(Question currentQuestion, int currentIndex) {
-        questionText = currentQuestion.getBody().split(" ");
+        questionText = currentQuestion.getQuestion().split(" ");
         if (currentIndex < questionText.length) {
             wordIndex = currentIndex;
             textToDisplay = generateText();
@@ -107,7 +107,7 @@ public class QuestionReader extends AppCompatTextView {
             handler.postDelayed(wordAdder, DELAY_IN_MS);
         }
         else {
-            setText(currentQuestion.getBody());
+            setText(currentQuestion.getQuestion());
         }
     }
 

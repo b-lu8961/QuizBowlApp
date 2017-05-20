@@ -1,5 +1,7 @@
 package app.bryanlu.quizbowl;
 
+import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -71,5 +73,19 @@ class QuestionParser {
         }
 
         return fileLines;
+    }
+
+    /**
+     * Parses questions line-by-line from a JSON file.
+     * @return an arraylist of the questions from the file
+     */
+    static Question[] parseQuestionsFromFile(String[] fileLines) {
+        Question[] questionList = new Question[fileLines.length];
+        Gson gson = new Gson();
+        for (int i = 0; i < fileLines.length; i++) {
+            Question specificQuestion = gson.fromJson(fileLines[i], Question.class);
+            questionList[i] = specificQuestion;
+        }
+        return questionList;
     }
 }

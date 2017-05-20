@@ -327,7 +327,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
         buttonState = ButtonState.NEXT;
         mainButton.setText(buttonState.text);
         questionReader.kill(isConnected());
-        questionReader.setText(currentQuestion.getBody());
+        questionReader.setText(currentQuestion.getQuestion());
         answerText.setText(currentQuestion.getAnswer());
         answerText.setVisibility(TextView.VISIBLE);
     }
@@ -372,7 +372,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
      * Checks if the user's answer is correct and then calls the appropriate actions.
      */
     private void checkAnswer() {
-        String realAnswer = currentQuestion.getFormattedAnswer();
+        String realAnswer = currentQuestion.makeFormattedAnswer();
         String userAnswer = answerEntry.getText().toString().trim();
         if (userAnswer.equalsIgnoreCase(realAnswer)) {
             questionReader.setQuestionInProgress(false);

@@ -19,7 +19,7 @@
     <string name="correct">CORRECT</string>
     <string name="incorrect">INCORRECT</string>
     <string name="result_image">Answer result image</string>
-    <string name="body">Body</string>
+    <string name="question">Body</string>
     <string name="main">NEXT</string>
     <string name="start_game">Start Game</string>
     <string name="end_game">End Game</string>

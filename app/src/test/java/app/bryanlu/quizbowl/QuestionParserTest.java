@@ -1,6 +1,5 @@
 package app.bryanlu.quizbowl;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -8,7 +7,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import app.bryanlu.quizbowl.dbobjects.Question;
-import app.bryanlu.quizbowl.dbobjects.Stats;
 
 import static org.junit.Assert.*;
 
@@ -43,6 +41,6 @@ public class QuestionParserTest {
                 "In CS 125 and CS 126, the JUnit framework is used to implement these " +
                 "things. For 10 points, name this thing that shares its name with a " +
                 "method of evaluating a student's knowledge. ";
-        assertEquals(answer, testQuestion.getBody());
+        assertEquals(answer, testQuestion.getQuestion());
     }
 }

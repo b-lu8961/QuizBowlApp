@@ -1,5 +1,6 @@
 package app.bryanlu.quizbowl;
 
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.content.res.Configuration;
 import android.support.v4.app.FragmentManager;
@@ -12,11 +13,20 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import app.bryanlu.quizbowl.dbobjects.Question;
 
 public class MainActivity extends AppCompatActivity {
     private ListView mDrawerList;
@@ -58,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        // Run one time only to initialize database
+        //addProtobowlQuestions();
     }
 
     @Override
@@ -138,6 +151,80 @@ public class MainActivity extends AppCompatActivity {
         };
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerToggle.setDrawerIndicatorEnabled(true);
+    }
+
+    /* Everything below is run only once for initialization */
+    /**
+     * Reads the ProtobowlQuestions file and passes the lines to the
+     * AddQuestions AsyncTask. Two AsyncTasks are used to reduce memory load.
+     */
+    private void addProtobowlQuestions() {
+        try {
+            // The json file is removed from the assets directory to make the app smaller
+            InputStream stream = null;
+            //stream = getAssets().open("ProtobowlQuestions.json");
+            ArrayList<String> fileLines = QuestionParser.getLines(stream);
+            String[] lineArray = fileLines.toArray(new String[0]);
+            String[] firstHalf = Arrays.copyOfRange(lineArray, 0, lineArray.length / 2);
+            String[] secondHalf = Arrays.copyOfRange(lineArray, (lineArray.length / 2) + 1,
+                    lineArray.length - 1);
+
+            Toast.makeText(this, "Question parsing starting.", Toast.LENGTH_SHORT).show();
+            new AddQuestionsTask().execute(firstHalf);
+            new AddQuestionsTask().execute(secondHalf);
+
+        } catch (IOException e) {
+            Toast.makeText(this, "Protobowl file not found.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Puts questions into the Firebase database.
+     * @param questionList arraylist of questions to add
+     */
+    private static void addQuestionToDatabase(Question[] questionList) {
+        DatabaseReference questionsRef = mDatabase.child("questions");
+        for (Question question : questionList) {
+            questionsRef.child(question.getCategory()).child(question.getDifficulty())
+                    .child(question.makeStringId()).setValue(question);
+        }
+    }
+
+    /**
+     * Recursively parses questions from the lines of the ProtobowlQuestions file using smaller
+     * sections of lines to avoid running out of memory.
+     */
+    private class AddQuestionsTask extends AsyncTask<String, Void, String[]> {
+        protected String[] doInBackground(String... lines) {
+            String[] subArray;
+            String[] leftover;
+            if (lines.length > 9999) {
+                subArray = Arrays.copyOfRange(lines, 0, 9999);
+                leftover = Arrays.copyOfRange(lines, 10000, lines.length);
+            }
+            else {
+                subArray = Arrays.copyOfRange(lines, 0, lines.length);
+                leftover = null;
+            }
+
+            Question[] questionList = QuestionParser.parseQuestionsFromFile(subArray);
+            addQuestionToDatabase(questionList);
+            return leftover;
+        }
+
+        @Override
+        protected void onPostExecute(String[] leftover) {
+            super.onPostExecute(leftover);
+            if (leftover != null) {
+                Toast.makeText(getApplicationContext(), "Parsing progress.",
+                        Toast.LENGTH_SHORT).show();
+                new AddQuestionsTask().execute(leftover);
+            }
+            else {
+                Toast.makeText(getApplicationContext(), "Parsing complete.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
 

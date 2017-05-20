@@ -165,7 +165,7 @@ public class DatabaseTests {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 readQuestion = dataSnapshot.getValue(Question.class);
                 assertEquals(testQuestion.getAnswer(), readQuestion.getAnswer());
-                assertEquals(testQuestion.getBody(), readQuestion.getBody());
+                assertEquals(testQuestion.getQuestion(), readQuestion.getQuestion());
             }
 
             @Override

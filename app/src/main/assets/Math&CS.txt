@@ -257,7 +257,7 @@ named for him states the buoyant force on an object is equal to the weight of th
 object. For 10 points, name this ancient Greek who legendarily shouted "Eureka" in his bathtub.
 ANSWER: Archimedes
 This person names a spiral represented by the polar equation r equals a plus b theta, where a and
-b are real. This person invented a screw for transferring water from a low-lying body of water into
+b are real. This person invented a screw for transferring water from a low-lying question of water into
 irrigation ditches. After discovering that the volume of water (*) displaced by an object must be equal
 to the object's volume, he ran through the streets naked shouting "Eureka!" For 10 points, identify this
 ancient Greek inventor who boasted he could move the world if given a lever and a place to stand.
@@ -2109,7 +2109,7 @@ For 10 points, name this occurrence in a network where there is a lot of traffic
 performance which also can occur on a highway during rush hour.
 ANSWER: congestion [prompt on traffic before mentioned]
 When one of these constructs is traced out pictorially, there will exist one or two Dandelin Spheres tangent
-to the plane that traced it out. Studied in antiquity by Apollonius of Perga, in the two body problem, if the
+to the plane that traced it out. Studied in antiquity by Apollonius of Perga, in the two question problem, if the
 center of mass is assumed to be at rest, the paths of the bodies will follow one of these paths. In polar
 coordinates, they take the form of l over the quantity one plus e times cosine of theta, where l is the semilatus rectum and e is the eccentricity. For 10 points, name these mathematical curves that include the
 ellipse, parabola, and hyperbola.
@@ -2838,7 +2838,7 @@ A pendulum constrained by inverted examples of this curve will have a path that 
 congruent, inverted example of this curve, which can be used to create isochronous pendulums
 for clocks. Roberval derived the area under this curve by using the method of indivisibles due to
 Cavalieri. The parametric form of this curve is given by x equals r times quant. t minus sine t and
-y equals r times quant. one minus cosine t. This figure is the fastest path by which a body can
+y equals r times quant. one minus cosine t. This figure is the fastest path by which a question can
 travel from one point to another under the influence of gravity, making it the solution to the
 brachistochrone problem. For 10 points, name this curve traced out by a point on a rotating circle
 traveling along a line.
@@ -4425,7 +4425,7 @@ includes his namesake totient function. He names a type of circuit which he used
 Konigsberg problem, as well as an identity stating that "e to the pi i equals -1." For 10 points, name this
 18th-century Swiss mathematician, namesake of the constant e.
 ANSWER: Leonhard Euler
-This person is the namesake of the three angles used to describe the orientation of a rigid body, and the
+This person is the namesake of the three angles used to describe the orientation of a rigid question, and the
 continued fraction named after him can be used to calculate the inverse tangent. His name is also attached to
 the simplest method of approximating solutions to differential equations by linear approximations, and the
 formula relating vertices, edges, and faces of a polyhedron. His name is also attached to an identity which
@@ -4504,7 +4504,7 @@ two, as well as an equation which relates five fundamental mathematical constant
 mathematician who names the constant used as the base of the natural logarithm, e.
 ANSWER: Leonhard (Paul) Euler [OY-lur]
 This scientist developed a set of three angles that can be multiplied to produce any rotation of a
-rigid body. This scientist proved that no circuit will cross each of seven edges once before returning
+rigid question. This scientist proved that no circuit will cross each of seven edges once before returning
 to its starting point, thus solving the (*) Seven Bridges of Konigsberg problem. He sometimes names the
 number that is the base of the natural logarithm and approximately equal to 2.71828. For 10 points, name
 this Swiss mathematician and physicist.
@@ -5536,7 +5536,7 @@ average interior degree measure of 108. This number is in a Pythagorean triple w
 three-squared plus four-squared is equal to twenty-five, the square of this number. For ten points, give this
 number of sides in a pentagon.
 ANSWER: five
-This is the number of solutions to the three-body problem when one of the bodies is assumed to be much
+This is the number of solutions to the three-question problem when one of the bodies is assumed to be much
 smaller than the others. This is number under the radical when finding the ratio between successively higher
 Fibonacci numbers. The Abel-Ruffini theorem states that polynomials of this degree cannot be solved, and
 this number is the second Fermat Prime and the third Sophie Germain Prime. This number is the When
@@ -7843,7 +7843,7 @@ Nonlinear systems with this property can be separated into Lax pairs. The Toda l
 example of a system that possesses soliton solutions as well as this property. A system is described by
 the Frobenius form of this property if it generates an ideal closed under exterior differentiation,
 whereas a completely this Hamiltonian system is a Hamiltonian system admitting the most possible
-constants of motion. The (*) three body system lacks this property, causing its solutions to be chaotic.
+constants of motion. The (*) three question system lacks this property, causing its solutions to be chaotic.
 The Lebesgue form of this property extends the Riemann form to sets of general measure. For 10 points,
 name this property which implies roughly that a given function has an antiderivative.
 ANSWER: integrable [accept word forms such as integrability, integration]
@@ -8591,20 +8591,20 @@ integer is the sum of four squares, and the difference between kinetic and poten
 alternative to the Hamiltonian in defining his namesake mechanics. He names factors termed lambda and
 mu which can be used to find the extrema of a function and are called his namesake multipliers. For 10
 points, name this French mathematician who names a set of five points in space that are a solution to the
-three-body problem.
+three-question problem.
 ANSWER: Joseph Louis Lagrange [accept Giuseppe Lodovico Lagrangia]
 A theorem named for him states that for a polynomial of degree n with integral coefficients, there exists a
 maximum of n solutions to f of x equals 0 modulo p. In addition, this man proved that every positive integer
 can be represented as a sum of four squares. A theorem named for him states that the order of a subgroup
 must divide the order of the group, and he is also the namesake of a method of finding the optima of a
 function by introducing the parameter lambda. The namesake of an error function associated with Taylor
-series, for 10 points, identify this Frenchie, who also found a set of points where a tiny body remains
+series, for 10 points, identify this Frenchie, who also found a set of points where a tiny question remains
 stationary relative to two larger bodies.
 ANSWER: Joseph Louis Lagrange
 This man improved upon Brouncker's continued fractions method to obtain a generalized solution of
 Pell's equations. His theorem in abstract algebra says a subgroup's order must divide the group's
 order, and he proved that each positive integer can be expressed as a sum of four squares. His work on
-the 3-body problem led to his namesake points, where the gravitational attraction of two bodies is balanced.
+the 3-question problem led to his namesake points, where the gravitational attraction of two bodies is balanced.
 For 10 points, name this French mathematician who lends his name to method of optimization which uses a
 name namesake multiplier and is useful when geometric constraints are present.
 ANSWER: Joseph Louis Lagrange
@@ -8613,8 +8613,8 @@ constant, consists of his "numbers." One theory named for him states that if p i
 polynomial of degree n, then the equation f of x = 0 mod p has at most n solutions between 0 and p. Another
 namesake theorem states that the size of a subgroup must divide that of any group containing it. The
 maximum and minimum values of a function subject to a geometric constraint can be found with his
-multipliers. For 10 points, identify this man who found the five spots in a two body system where a third
-body of negligible mass will be stationary, known as his "points."
+multipliers. For 10 points, identify this man who found the five spots in a two question system where a third
+question of negligible mass will be stationary, known as his "points."
 ANSWER: Joseph-Louis Lagrange
 An identity named for this man can be obtained by using only two, rather than four sets of elements in the
 Cauchy-Binet identity and gives a more general form of the Cauchy-Schwarz inequality. This man also
@@ -8629,7 +8629,7 @@ that there are infinitely many x and y. In addition to creating continued fracti
 equation, he also published the first proof of Wilson's theorem. He proved that, for any subgroup of
 a finite group, the order of the (*) subgroup divides the original group, and also created a technique for
 performing constrained maximization that uses his multipliers. For 10 points, name this French
-mathematician whose five points in an orbital system are the positions where a body affected only by
+mathematician whose five points in an orbital system are the positions where a question affected only by
 gravity can remain stationary.
 ANSWER: Joseph Louis Lagrange or Giuseppe Lodovico Lagrangia
 De Bruijn invented an alternative syntax for use in this system, and Sinot created director strings in order to
@@ -9242,7 +9242,7 @@ be used to make the "for" variety of these, and an inaccessible exit condition r
 these. For 10 points, name these iterative structures in programs that execute the same instructions until a
 certain condition is reached.
 ANSWER: loops [prompt on iterators]
-Whether the test condition is checked before or after the body of these structures determines if they are
+Whether the test condition is checked before or after the question of these structures determines if they are
 pre-test or post-test. The namesake counter variable for some of these structures, which is commonly a
 variable named i or j, is also called an iterator. These structures can be declared using the keywords for or
 while, and repeat a block of code. For 10 points, identify these programming structures that can run forever
@@ -9255,9 +9255,9 @@ command. These constructs come in "while" and "for" types. Name these repeating 
 "infinite" one of which will cause a program to run forever.
 ANSWER: loops [or specific answers, such as for loops or while loops]
 In functional languages these entities can be expressed using recursion or fixed point iteration instead
-of their explicit constructs. These typically consist of a body and a condition, and some varieties
+of their explicit constructs. These typically consist of a question and a condition, and some varieties
 include a stop, start, and step value. A common error involving these occurs when one creates a
-condition that can never be met and thus the body (*) continues indefinitely. This produces an "infinite"
+condition that can never be met and thus the question (*) continues indefinitely. This produces an "infinite"
 variety of one of these. For 10 points, name this type of control structure in programming that most notably
 comes in the While and For varieties.
 ANSWER: Loops
@@ -13657,12 +13657,12 @@ eigenvalues. In the complex plane, this transformation can be achieved by the ac
 the unitary group of degree 1, or by multiplication by complex (*) exponentials. Axial vectors pick up a
 minus sign under the composition of one of these transformations with a reflection. In two dimensions,
 multiplication by a matrix consisting of cosines and sines corresponds to this transformation. For 10 points,
-identify this type of transformation that moves a body through a fixed angle.
+identify this type of transformation that moves a question through a fixed angle.
 ANSWER: rotation
 In R3, the sum of these operations is specified using SO(3). One operation of this type transforms
 a problem in Minkowski space to one in Euclidean space by replacing imaginary parts with real
 parts; that type is named for Wick. Slerping is a process of interpolating unit quaternions that are
-used in representing this action. Any displacement of a rigid body with one fixed point is one of these
+used in representing this action. Any displacement of a rigid question with one fixed point is one of these
 (*) transformations. In 2D, this operation is performed using a 2 by 2 matrix with entries cosine, negative
 sine, sine, cosine. Gabriel's horn is generated by taking the equation y equals one over x and performing
 this action with respect to the x-axis. For 10 points, name this mathematical operation of revolving a
@@ -13672,14 +13672,14 @@ In Euclidean spaces of n dimensions, this operation is represented by the specia
 n. Along with translations and boosts, operations of this kind make up the Lorentz group of special
 relativity. In quantum mechanics, the angular momentum operator is the generator of the infinitesimal
 operations of this kind. The plane of polarization will undergo this action in light propagating along a
-magnetic field, and for a rigid body, any action of this type can be decomposed into three actions of this
+magnetic field, and for a rigid question, any action of this type can be decomposed into three actions of this
 kind performed with respect to the Euler angles. In two dimensions, performing this operation by some
 angle theta involves multiplying by a matrix whose four entries are cosine-theta, sine-theta, minus-sinetheta, and cosine-theta. For 10 points, identify this operation which involves displacing an object along an
 angular, rather than a linear coordinate.
 ANSWER: rotation
 The Wick type of this process multiplies the temporal dimension by i in order to make Minkowski
 space look Euclidean. The Lorentz group includes these transformations and boosts, and one Lie
-group representation of them is the group SO(3). An asymmetric rigid body has six degrees of
+group representation of them is the group SO(3). An asymmetric rigid question has six degrees of
 freedom: three from translation and three from this transformation. Euler angles describe this
 transformation. The (*) matrix for this transformation is [cosine x, negative sine x; sine x, cosine x] in 2D.
 This transformation preserves the length of a vector. For 10 points, name this transformation that turns an
@@ -13690,7 +13690,7 @@ vectors undergoing this motion. Gradients of scalar fields do not do this, as ev
 the curl operator on those vector fields. Any motion of this type can be decomposed into three orthogonal
 uniaxial motions, perhaps using Euler angles, or by specifying the yaw, pitch, and roll. In spherical
 coordinates, these motions correspond to those in which the radius coordinate is unchanged. Where this
-motion exists, angular momentum is nonzero. For 10 points, name this type of motion in which a body
+motion exists, angular momentum is nonzero. For 10 points, name this type of motion in which a question
 moves about an axis but not along it.
 ANSWER: rotation [accept circulation; or word forms; do not accept "circular motion"]
 In numerical algorithms, machine epsilon measures the degree to which this operation affects the outcome
@@ -15092,7 +15092,7 @@ ANSWER: Student's t-test
 The caption element must be a direct child of this element, which used to be popular for web page
 layout but has been superseded for that purpose by CSS with div tags. Zebra striping may be used
 to make these parts of web pages easier to read. Its children, which can be grouped into thead ["T
-head"], tbody ["T body"], and tfoot ["T foot"], are tr ["T R"] sections; they in turn contain th ["T
+head"], tbody ["T question"], and tfoot ["T foot"], are tr ["T R"] sections; they in turn contain th ["T
 H"] and td ["T D"] tags that produce cells. Name this HTML tag that creates a grid with rows and
 columns.
 ANSWER: table tag
