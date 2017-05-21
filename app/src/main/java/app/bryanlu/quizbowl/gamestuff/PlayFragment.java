@@ -1,4 +1,4 @@
-package app.bryanlu.quizbowl;
+package app.bryanlu.quizbowl.gamestuff;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -36,6 +36,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import app.bryanlu.quizbowl.DBUtils;
+import app.bryanlu.quizbowl.QuestionParser;
+import app.bryanlu.quizbowl.QuestionReader;
+import app.bryanlu.quizbowl.R;
 import app.bryanlu.quizbowl.dbobjects.CategoryList;
 import app.bryanlu.quizbowl.dbobjects.GameRoom;
 import app.bryanlu.quizbowl.dbobjects.Question;
@@ -59,14 +63,14 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
     private EditText answerEntry;
     private ImageView resultImageLeft;
     private ImageView resultImageRight;
-    private HashMap<String, ArrayList<Question>> questionSources = new HashMap<>();
 
+    private HashMap<String, ArrayList<Question>> questionSources = new HashMap<>();
     private ArrayList<Question> questionList = new ArrayList<>();
     private Question currentQuestion;
     private int wordIndex;
     private ButtonState buttonState = ButtonState.NEXT;
-    private int questionNumber = 0;
 
+    private int questionNumber = 0;
     private int numCurrentUsers = 0;
     private int numRestrictedUsers = 0;
     private boolean gameInProgress = false;
@@ -117,6 +121,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
             }
         });
 
+        connectedText = (TextView) mView.findViewById(R.id.connectedText);
         gameToggleButton = (Button) mView.findViewById(R.id.gameToggleButton);
         gameToggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,11 +133,9 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
             gameToggleButton.setVisibility(View.VISIBLE);
         }
 
-        connectedText = (TextView) mView.findViewById(R.id.connectedText);
-
         listener = new PlayListener();
         loadQuestions();
-        DBUtils.checkForGameRoom();
+        GameUtils.checkForGameRoom();
         return mView;
     }
 
@@ -141,7 +144,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
         super.onResume();
         changeCategoryImages(new ArrayList<String>());
         if (isConnected()) {
-            DBUtils.connectToGameRoom(this);
+            GameUtils.connectToGameRoom(this);
             gameRoomRef.addChildEventListener(listener);
         }
         else {
@@ -154,9 +157,9 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
         super.onStop();
         if (isConnected()) {
             if (numCurrentUsers <= 1) {
-                DBUtils.resetCategories();
+                GameUtils.resetCategories();
             }
-            DBUtils.disconnectFromGameRoom();
+            GameUtils.disconnectFromGameRoom();
             gameRoomRef.removeEventListener(listener);
         }
     }
@@ -230,7 +233,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
     public void onDialogPositiveClick(CategoryDialog dialog) {
         setQuestionList(dialog.getSelectedCategories());
         ArrayList<String> selectedCategories = dialog.getSelectedCategories();
-        DBUtils.setCategories(new CategoryList(selectedCategories));
+        GameUtils.setCategories(new CategoryList(selectedCategories));
     }
 
     /**
@@ -286,7 +289,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
         int index = (int) (Math.random() * questionList.size());
         if (questionList.size() != 0) {
             currentQuestion = questionList.get(index);
-            DBUtils.setDatabaseQuestion(currentQuestion);
+            GameUtils.setDatabaseQuestion(currentQuestion);
             return true;
         }
         else {
@@ -334,7 +337,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
 
     /**
      * Starts the appropriate action based on this user's buzz order.
-     * Called from DBUtils.tryBuzz().
+     * Called from GameUtils.tryBuzz().
      * @param isFirst is user buzz first in line
      */
     void handleBuzz(boolean isFirst) {
@@ -380,7 +383,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
             showResultImages(true);
             Toast.makeText(getContext(), getString(R.string.correct), Toast.LENGTH_SHORT).show();
             if (isConnected()) {
-                DBUtils.setQuestionInProgress(false);
+                GameUtils.setQuestionInProgress(false);
             }
             else {
                 killQuestion();
@@ -390,12 +393,12 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
             updateScore(false);
             showResultImages(false);
             Toast.makeText(getContext(), getString(R.string.incorrect), Toast.LENGTH_SHORT).show();
-            DBUtils.addToRestrictedList();
+            GameUtils.addToRestrictedList();
             if (!isConnected()) {
                 killQuestion();
             }
         }
-        DBUtils.resetBuzzInProgress();
+        GameUtils.resetBuzzInProgress();
     }
 
     /**
@@ -414,7 +417,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
             scoreText.setText(scoreString);
         }
 
-        DBUtils.updateStats(answerIsCorrect, questionReader.isQuestionInProgress());
+        GameUtils.updateStats(answerIsCorrect, questionReader.isQuestionInProgress());
     }
 
     /**
@@ -459,8 +462,8 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
                 if (questionSet) {
                     resetGameScreen();
                     if (isConnected()) {
-                        DBUtils.resetGameRoom();
-                        DBUtils.setQuestionInProgress(true);
+                        GameUtils.resetGameRoom();
+                        GameUtils.setQuestionInProgress(true);
                     }
                     else {
                         questionReader.read(currentQuestion);
@@ -471,7 +474,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
                 buttonState = ButtonState.SHOW;
                 mainButton.setText(buttonState.text);
                 if (isConnected()) {
-                    DBUtils.tryBuzz(this);
+                    GameUtils.tryBuzz(this);
                 }
                 else {
                     wordIndex = questionReader.pause();
@@ -489,10 +492,10 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
      */
     private void onGameToggleClick() {
         if (gameInProgress) {
-            DBUtils.setGameInProgress(false);
+            GameUtils.setGameInProgress(false);
         }
         else {
-            DBUtils.setGameInProgress(true);
+            GameUtils.setGameInProgress(true);
         }
     }
 
@@ -612,7 +615,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
                 wordIndex = questionReader.pause();
                 mainButton.setEnabled(false);
                 if (!buzzerId.equals(mUser.getUid())) {
-                    DBUtils.makeBuzzToast(buzzerId, getContext());
+                    GameUtils.makeBuzzToast(buzzerId, getContext());
                 }
             }
             else {
@@ -620,7 +623,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
                 if (questionReader.isQuestionInProgress()) {
                     if (buttonState == ButtonState.NEXT) {
                         questionReader.setQuestionInProgress(false);
-                        DBUtils.setQuestionInProgress(false);
+                        GameUtils.setQuestionInProgress(false);
                     }
                     else {
                         questionReader.resume(currentQuestion, wordIndex);
@@ -645,7 +648,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
             else {
                 gameToggleButton.setText(getString(R.string.start_game));
                 int gameScore = localScore - startOfGameScore;
-                DBUtils.sendGameScore(getContext(), numCurrentUsers, username, gameScore);
+                GameUtils.sendGameScore(getContext(), numCurrentUsers, username, gameScore);
             }
         }
 
@@ -680,7 +683,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
          */
         private void checkForEndOfQuestion() {
             if (numCurrentUsers == numRestrictedUsers) {
-                DBUtils.setQuestionInProgress(false);
+                GameUtils.setQuestionInProgress(false);
                 questionReader.setQuestionInProgress(false);
             }
         }

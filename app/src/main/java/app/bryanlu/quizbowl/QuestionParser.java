@@ -16,7 +16,7 @@ import app.bryanlu.quizbowl.dbobjects.Question;
  *
  * Reads text files and creates the appropriate questions.
  */
-class QuestionParser {
+public class QuestionParser {
     private static final String ANSWER_START = "ANSWER: ";
 
     /**
@@ -24,7 +24,7 @@ class QuestionParser {
      * @param fileLines lines from a text file containing questions
      * @return an arraylist of Questions
      */
-    static ArrayList<Question> parseQuestions(ArrayList<String> fileLines) {
+    public static ArrayList<Question> parseQuestions(ArrayList<String> fileLines) {
         ArrayList<Question> questionList = new ArrayList<>();
         int startLineNum = 0;
         for (int i = 0; i < fileLines.size(); i++) {
@@ -56,7 +56,7 @@ class QuestionParser {
      * @throws FileNotFoundException bad input stream file reference
      * @throws IOException problem reading file
      */
-    static ArrayList<String> getLines(InputStream stream)
+    public static ArrayList<String> getLines(InputStream stream)
             throws FileNotFoundException, IOException {
         ArrayList<String> fileLines = new ArrayList<>();
         try {

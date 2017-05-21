@@ -71,19 +71,21 @@ public class StatsFragment extends Fragment {
      * Reads the current user's stats from the database.
      */
     private void getStats() {
-        mDatabase.child(User.USERS).child(mUser.getUid()).addListenerForSingleValueEvent(
-                new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Stats personalStats = dataSnapshot.child(User.STATS).getValue(Stats.class);
-                changeText(personalStats);
-            }
+        if (mUser != null) {
+            mDatabase.child(User.USERS).child(mUser.getUid()).addListenerForSingleValueEvent(
+                    new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Stats personalStats = dataSnapshot.child(User.STATS).getValue(Stats.class);
+                            changeText(personalStats);
+                        }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getContext(), "Database read failed", Toast.LENGTH_SHORT).show();
-            }
-        });
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Toast.makeText(getContext(), "Database read failed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
     }
 
     /**

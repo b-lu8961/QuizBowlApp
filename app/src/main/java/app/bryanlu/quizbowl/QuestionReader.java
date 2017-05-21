@@ -55,11 +55,11 @@ public class QuestionReader extends AppCompatTextView {
         }
     };
 
-    void setQuestionInProgress(boolean inProgress) {
+    public void setQuestionInProgress(boolean inProgress) {
         questionInProgress = inProgress;
     }
 
-    boolean isQuestionInProgress() {
+    public boolean isQuestionInProgress() {
         return questionInProgress;
     }
 
@@ -67,7 +67,7 @@ public class QuestionReader extends AppCompatTextView {
      * Starts reading the question by using the Runnable defined in this class.
      * @param currentQuestion the question to read
      */
-    void read(Question currentQuestion) {
+    public void read(Question currentQuestion) {
         questionText = currentQuestion.getQuestion().split(" ");
         wordIndex = 0;
         textToDisplay = "";
@@ -83,7 +83,7 @@ public class QuestionReader extends AppCompatTextView {
      * Temporarily stop reading the question (and display partial question text).
      * @return the word index at pause time
      */
-    int pause() {
+    public int pause() {
         isRunning = false;
         setText(textToDisplay);
         return wordIndex;
@@ -94,7 +94,7 @@ public class QuestionReader extends AppCompatTextView {
      * @param currentQuestion question to resume reading
      * @param currentIndex spot at which to resume
      */
-    void resume(Question currentQuestion, int currentIndex) {
+    public void resume(Question currentQuestion, int currentIndex) {
         questionText = currentQuestion.getQuestion().split(" ");
         if (currentIndex < questionText.length) {
             wordIndex = currentIndex;
@@ -115,7 +115,7 @@ public class QuestionReader extends AppCompatTextView {
      * Stop reading the question and display the entire question text (if not connected).
      * @param isConnected true if device is connected to the internet, false if not
      */
-    void kill(boolean isConnected) {
+    public void kill(boolean isConnected) {
         isRunning = false;
         if (!isConnected) {
             wordIndex = questionText.length;

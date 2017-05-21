@@ -1,4 +1,4 @@
-package app.bryanlu.quizbowl;
+package app.bryanlu.quizbowl.gamestuff;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -9,6 +9,8 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
 import java.util.ArrayList;
+
+import app.bryanlu.quizbowl.R;
 
 /**
  * Created by Bryan Lu on 4/29/2017.

@@ -24,21 +24,22 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import app.bryanlu.quizbowl.dbobjects.Question;
+import app.bryanlu.quizbowl.gamestuff.PlayFragment;
+import app.bryanlu.quizbowl.gamestuff.PlayMenuFragment;
 
 public class MainActivity extends AppCompatActivity {
     private ListView mDrawerList;
     private ArrayAdapter<String> drawerAdapter;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    private Fragment playFragment;
+    private Fragment playMenuFragment;
     private Fragment signInFragment;
     private Fragment statsFragment;
-    static FirebaseAuth mAuth;
-    static FirebaseUser mUser;
-    static DatabaseReference mDatabase;
+    public static FirebaseAuth mAuth;
+    public static FirebaseUser mUser;
+    public static DatabaseReference mDatabase;
 
 
     @Override
@@ -56,14 +57,15 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("questions").removeValue();
 
-        playFragment = new PlayFragment();
+        playMenuFragment = new PlayMenuFragment();
         signInFragment = new AccountFragment();
         statsFragment = new StatsFragment();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.container, playFragment)
+                .add(R.id.container, playMenuFragment)
                 .commit();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -114,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragmentToUse = null;
         switch(position) {
             case PlayFragment.POSITION:
-                fragmentToUse = playFragment;
+                fragmentToUse = playMenuFragment;
                 break;
             case AccountFragment.POSITION:
                 fragmentToUse = signInFragment;

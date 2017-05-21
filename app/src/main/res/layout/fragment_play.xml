@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="app.bryanlu.quizbowl.PlayFragment">
+    tools:context="app.bryanlu.quizbowl.gamestuff.PlayFragment">
 
     <TextView
         android:id="@+id/usernameText"
@@ -135,7 +135,8 @@
         android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toTopOf="@+id/connectedText"
         android:layout_marginLeft="66dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="66dp" />
 
     <TextView
         android:id="@+id/connectedText"
@@ -160,7 +161,6 @@
         android:layout_height="42dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="0dp"
         android:contentDescription="@string/bioIcon"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/categoriesButton"
@@ -184,7 +184,6 @@
         android:id="@+id/geoImage"
         android:layout_width="42dp"
         android:layout_height="42dp"
-        android:layout_marginBottom="0dp"
         android:contentDescription="@string/geoIcon"
         app:layout_constraintBottom_toBottomOf="@+id/chemImage"
         app:layout_constraintLeft_toRightOf="@+id/chemImage"
@@ -227,7 +226,9 @@
         android:visibility="visible"
         app:layout_constraintLeft_toRightOf="@+id/mainButton"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/answerEntry" />
+        app:layout_constraintTop_toBottomOf="@+id/answerEntry"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
 </android.support.constraint.ConstraintLayout>
 
