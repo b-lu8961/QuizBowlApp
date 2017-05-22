@@ -14,11 +14,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 class PlayPagerAdapter extends FragmentPagerAdapter {
     private final int PAGE_COUNT = 3;
     private String[] tabTitles = {"Setup", "Play", "Scores"};
-    private Context context;
 
-    PlayPagerAdapter(FragmentManager fm, Context context) {
+    PlayPagerAdapter(FragmentManager fm) {
         super(fm);
-        this.context = context;
     }
 
     @Override
@@ -29,11 +27,11 @@ class PlayPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position) {
-            case 0:
+            case SetupFragment.POSITION:
                 return new SetupFragment();
-            case 1:
+            case PlayFragment.POSITION:
                 return new PlayFragment();
-            case 2:
+            case ScoresFragment.POSITION:
                 return new ScoresFragment();
         }
         return null;

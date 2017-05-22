@@ -52,7 +52,7 @@ import static app.bryanlu.quizbowl.MainActivity.mUser;
  * Fragment that allows users to play questions.
  */
 public class PlayFragment extends Fragment implements CategoryDialog.DialogListener {
-    public static final int POSITION = 0;
+    public static final int POSITION = 1;
     private TextView answerText;
     private TextView scoreText;
     private TextView connectedText;

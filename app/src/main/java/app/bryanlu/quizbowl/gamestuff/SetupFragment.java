@@ -15,6 +15,8 @@ import app.bryanlu.quizbowl.R;
  */
 
 public class SetupFragment extends Fragment {
+    public static final int POSITION = 0;
+
     public SetupFragment() {
         // Required default fragment constructor
     }
