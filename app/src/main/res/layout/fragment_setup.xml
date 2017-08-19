@@ -1,11 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Room Setup" />
-</LinearLayout>
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:gravity="center"
+        android:text="@string/setup_category_title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <CheckBox
+        android:id="@+id/currentCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/current_checkbox"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/artCheckBox"
+        app:layout_constraintTop_toTopOf="@+id/artCheckBox"
+        tools:layout_constraintTop_creator="1" />
+
+    <CheckBox
+        android:id="@+id/artCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/art_checkbox"
+        app:layout_constraintLeft_toRightOf="@+id/currentCheckBox"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintRight_toLeftOf="@+id/geoCheckBox" />
+
+    <CheckBox
+        android:id="@+id/geoCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/geo_checkbox"
+        app:layout_constraintLeft_toRightOf="@+id/artCheckBox"
+        app:layout_constraintTop_toTopOf="@+id/artCheckBox"
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <CheckBox
+        android:id="@+id/litCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/lit_checkbox"
+        app:layout_constraintLeft_toRightOf="@+id/historyCheckBox"
+        app:layout_constraintTop_toBottomOf="@+id/artCheckBox"
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintRight_toLeftOf="@+id/mythCheckBox" />
+
+    <CheckBox
+        android:id="@+id/historyCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/history_checkbox"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/currentCheckBox"
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintRight_toLeftOf="@+id/litCheckBox" />
+
+    <CheckBox
+        android:id="@+id/mythCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/myth_checkbox"
+        app:layout_constraintLeft_toRightOf="@+id/litCheckBox"
+        app:layout_constraintTop_toBottomOf="@+id/geoCheckBox"
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <CheckBox
+        android:id="@+id/philCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/phil_checkbox"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/historyCheckBox"
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintRight_toLeftOf="@+id/relCheckBox" />
+
+    <CheckBox
+        android:id="@+id/relCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/rel_checkbox"
+        app:layout_constraintLeft_toRightOf="@+id/philCheckBox"
+        app:layout_constraintTop_toBottomOf="@+id/litCheckBox"
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintRight_toLeftOf="@+id/sciCheckBox" />
+
+    <CheckBox
+        android:id="@+id/sciCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/sci_checkbox"
+        app:layout_constraintLeft_toRightOf="@+id/relCheckBox"
+        app:layout_constraintTop_toBottomOf="@+id/mythCheckBox"
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <CheckBox
+        android:id="@+id/socSciCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/socSci_checkbox"
+        app:layout_constraintTop_toBottomOf="@+id/philCheckBox"
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintRight_toLeftOf="@+id/trashCheckBox"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <CheckBox
+        android:id="@+id/trashCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/trash_checkbox"
+        app:layout_constraintTop_toBottomOf="@+id/relCheckBox"
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/socSciCheckBox" />
+
+</android.support.constraint.ConstraintLayout>

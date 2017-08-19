@@ -28,8 +28,10 @@ import java.util.Arrays;
 import app.bryanlu.quizbowl.dbobjects.Question;
 import app.bryanlu.quizbowl.gamestuff.PlayFragment;
 import app.bryanlu.quizbowl.gamestuff.PlayMenuFragment;
+import app.bryanlu.quizbowl.gamestuff.SetupFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements SetupFragment.OnCheckboxClickedListener {
     private ListView mDrawerList;
     private ArrayAdapter<String> drawerAdapter;
     private DrawerLayout mDrawerLayout;
@@ -37,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
     private Fragment playMenuFragment;
     private Fragment signInFragment;
     private Fragment statsFragment;
+    private final String PLAY_TAG = "PLAY_MENU_FRAGMENT";
+    private final String SIGN_IN_TAG = "SIGN_IN_FRAGMENT";
+    private final String STATS_TAG = "STATS_FRAGMENT";
     public static FirebaseAuth mAuth;
     public static FirebaseUser mUser;
     public static DatabaseReference mDatabase;
@@ -65,14 +70,12 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.container, playMenuFragment)
+                .add(R.id.container, playMenuFragment, PLAY_TAG)
                 .commit();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        // Run one time only to initialize database
-        //addProtobowlQuestions();
     }
 
     @Override
@@ -114,21 +117,25 @@ public class MainActivity extends AppCompatActivity {
      */
     private void selectItem(int position) {
         Fragment fragmentToUse = null;
+        String tagToUse = null;
         switch(position) {
-            case PlayFragment.POSITION:
+            case PlayMenuFragment.POSITION:
                 fragmentToUse = playMenuFragment;
+                tagToUse = PLAY_TAG;
                 break;
             case AccountFragment.POSITION:
                 fragmentToUse = signInFragment;
+                tagToUse = SIGN_IN_TAG;
                 break;
             case StatsFragment.POSITION:
                 fragmentToUse = statsFragment;
+                tagToUse = STATS_TAG;
                 break;
         }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, fragmentToUse)
+                .replace(R.id.container, fragmentToUse, tagToUse)
                 .commit();
 
         mDrawerList.setItemChecked(position, true);
@@ -155,78 +162,12 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle.setDrawerIndicatorEnabled(true);
     }
 
-    /* Everything below is run only once for initialization */
-    /**
-     * Reads the ProtobowlQuestions file and passes the lines to the
-     * AddQuestions AsyncTask. Two AsyncTasks are used to reduce memory load.
-     */
-    private void addProtobowlQuestions() {
-        try {
-            // The json file is removed from the assets directory to make the app smaller
-            InputStream stream = null;
-            //stream = getAssets().open("ProtobowlQuestions.json");
-            ArrayList<String> fileLines = QuestionParser.getLines(stream);
-            String[] lineArray = fileLines.toArray(new String[0]);
-            String[] firstHalf = Arrays.copyOfRange(lineArray, 0, lineArray.length / 2);
-            String[] secondHalf = Arrays.copyOfRange(lineArray, (lineArray.length / 2) + 1,
-                    lineArray.length - 1);
+    @Override
+    public void onCategoryChange(ArrayList<String> categories) {
+        PlayMenuFragment fragment = (PlayMenuFragment)getSupportFragmentManager()
+                .findFragmentByTag(PLAY_TAG);
 
-            Toast.makeText(this, "Question parsing starting.", Toast.LENGTH_SHORT).show();
-            new AddQuestionsTask().execute(firstHalf);
-            new AddQuestionsTask().execute(secondHalf);
-
-        } catch (IOException e) {
-            Toast.makeText(this, "Protobowl file not found.", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /**
-     * Puts questions into the Firebase database.
-     * @param questionList arraylist of questions to add
-     */
-    private static void addQuestionToDatabase(Question[] questionList) {
-        DatabaseReference questionsRef = mDatabase.child("questions");
-        for (Question question : questionList) {
-            questionsRef.child(question.getCategory()).child(question.getDifficulty())
-                    .child(question.makeStringId()).setValue(question);
-        }
-    }
-
-    /**
-     * Recursively parses questions from the lines of the ProtobowlQuestions file using smaller
-     * sections of lines to avoid running out of memory.
-     */
-    private class AddQuestionsTask extends AsyncTask<String, Void, String[]> {
-        protected String[] doInBackground(String... lines) {
-            String[] subArray;
-            String[] leftover;
-            if (lines.length > 9999) {
-                subArray = Arrays.copyOfRange(lines, 0, 9999);
-                leftover = Arrays.copyOfRange(lines, 10000, lines.length);
-            }
-            else {
-                subArray = Arrays.copyOfRange(lines, 0, lines.length);
-                leftover = null;
-            }
-
-            Question[] questionList = QuestionParser.parseQuestionsFromFile(subArray);
-            addQuestionToDatabase(questionList);
-            return leftover;
-        }
-
-        @Override
-        protected void onPostExecute(String[] leftover) {
-            super.onPostExecute(leftover);
-            if (leftover != null) {
-                Toast.makeText(getApplicationContext(), "Parsing progress.",
-                        Toast.LENGTH_SHORT).show();
-                new AddQuestionsTask().execute(leftover);
-            }
-            else {
-                Toast.makeText(getApplicationContext(), "Parsing complete.",
-                        Toast.LENGTH_SHORT).show();
-            }
-        }
+        fragment.setSelectedCategories(categories);
     }
 }
 

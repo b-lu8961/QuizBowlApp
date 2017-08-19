@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">QuizBowl</string>
+    <string name="pref_file_key">app.bryanlu.quizbowl.PREF_FILE_KEY</string>
     <string name="signOut">Sign Out</string>
     <string name="not_logged_in">Not logged in</string>
     <string name="user_prefix">User:\u0020</string>
@@ -43,9 +44,34 @@
     <string name="mathIcon">Math icon</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="setup_category_title">Categories</string>
+    <string name="current_checkbox">Current Events</string>
+    <string name="art_checkbox">Fine Arts</string>
+    <string name="geo_checkbox">Geography</string>
+    <string name="history_checkbox">History</string>
+    <string name="lit_checkbox">Literature</string>
+    <string name="myth_checkbox">Mythology</string>
+    <string name="phil_checkbox">Philosophy</string>
+    <string name="rel_checkbox">Religion</string>
+    <string name="sci_checkbox">Science</string>
+    <string name="socSci_checkbox">Social Science</string>
+    <string name="trash_checkbox">Trash</string>
     <string-array name="drawer_options">
         <item>Play</item>
         <item>Account</item>
         <item>Stats</item>
+    </string-array>
+    <string-array name="table_names">
+        <item>CurrentEvents</item>
+        <item>FineArts</item>
+        <item>Geography</item>
+        <item>History</item>
+        <item>Literature</item>
+        <item>Mythology</item>
+        <item>Philosophy</item>
+        <item>Religion</item>
+        <item>Science</item>
+        <item>SocialScience</item>
+        <item>Trash</item>
     </string-array>
 </resources>

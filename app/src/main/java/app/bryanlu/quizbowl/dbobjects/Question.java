@@ -72,19 +72,6 @@ public class Question {
     }
 
     /**
-     * Concatenates the torunament, year, round, and question number into one string, with each
-     * element separated by an underscore.
-     * @return unique string id for use in the Firebase database
-     */
-    public String makeStringId() {
-        String id = tournament + "_";
-        id += year + "_";
-        id += round + "_";
-        id += num;
-        return id;
-    }
-
-    /**
      * Removes parenthetical info and trims spaces from this question's answer.
      * @return answer string to be compared with the user's answer
      */

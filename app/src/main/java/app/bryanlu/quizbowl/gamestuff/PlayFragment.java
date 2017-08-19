@@ -245,11 +245,13 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
         SourceType[] types = SourceType.values();
         for (SourceType type : types) {
             ImageView categoryImage = (ImageView) getActivity().findViewById(type.imageViewId);
-            if (selectedCategories.contains(getString(type.key))) {
-                categoryImage.setColorFilter(null);
-            }
-            else {
-                categoryImage.setColorFilter(Color.argb(220, 200, 200, 200)); //transparent grey
+            if (categoryImage != null) {
+                if (selectedCategories.contains(getString(type.key))) {
+                    categoryImage.setColorFilter(null);
+                }
+                else {
+                    categoryImage.setColorFilter(Color.argb(220, 200, 200, 200)); //transparent grey
+                }
             }
         }
     }

@@ -1,13 +1,14 @@
 package app.bryanlu.quizbowl.gamestuff;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
 
 import app.bryanlu.quizbowl.R;
 
@@ -18,9 +19,11 @@ import app.bryanlu.quizbowl.R;
  */
 
 public class PlayMenuFragment extends Fragment {
-    public static final String POSITION = "POSITION";
+    public static final int POSITION = 0;
+    public static final String POSITION_KEY = "POSITION_KEY";
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
+    private ArrayList<String> selectedCategories;
 
     public PlayMenuFragment() {
         // Required default fragment constructor
@@ -43,13 +46,19 @@ public class PlayMenuFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(POSITION, mTabLayout.getSelectedTabPosition());
+        outState.putInt(POSITION_KEY, mTabLayout.getSelectedTabPosition());
     }
 
     @Override
     public void onViewStateRestored(Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
 
-        mViewPager.setCurrentItem(savedInstanceState.getInt(POSITION));
+        if (savedInstanceState != null) {
+                mViewPager.setCurrentItem(savedInstanceState.getInt(POSITION_KEY));
+        }
+    }
+
+    public void setSelectedCategories(ArrayList<String> categories) {
+        selectedCategories = categories;
     }
 }

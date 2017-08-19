@@ -22,7 +22,7 @@ public class QuestionParser {
     /**
      * Creates Question objects from the arraylist of lines passed in.
      * @param fileLines lines from a text file containing questions
-     * @return an arraylist of Questions
+     * @return an arraylist of BaseTable
      */
     public static ArrayList<Question> parseQuestions(ArrayList<String> fileLines) {
         ArrayList<Question> questionList = new ArrayList<>();
