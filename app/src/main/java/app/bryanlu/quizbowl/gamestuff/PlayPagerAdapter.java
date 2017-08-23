@@ -8,15 +8,22 @@ import android.support.v4.app.FragmentPagerAdapter;
 /**
  * Created by Bryan Lu on 5/21/2017.
  *
- * Adapter that adds for the Play Menu tabs.
+ * Adapter that returns fragments for each of the Play Menu tabs.
  */
 
 class PlayPagerAdapter extends FragmentPagerAdapter {
     private final int PAGE_COUNT = 3;
+    private SetupFragment setup;
+    private PlayFragment play;
+    private ScoresFragment scores;
     private String[] tabTitles = {"Setup", "Play", "Scores"};
 
-    PlayPagerAdapter(FragmentManager fm) {
+    PlayPagerAdapter(FragmentManager fm, SetupFragment setup, PlayFragment play,
+                     ScoresFragment scores) {
         super(fm);
+        this.setup = setup;
+        this.play = play;
+        this.scores = scores;
     }
 
     @Override
@@ -28,13 +35,14 @@ class PlayPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case SetupFragment.POSITION:
-                return new SetupFragment();
+                return setup;
             case PlayFragment.POSITION:
-                return new PlayFragment();
+                return play;
             case ScoresFragment.POSITION:
-                return new ScoresFragment();
+                return scores;
+            default:
+                return null;
         }
-        return null;
     }
 
     @Override

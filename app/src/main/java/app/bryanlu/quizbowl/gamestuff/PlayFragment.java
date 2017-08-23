@@ -4,10 +4,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.text.method.ScrollingMovementMethod;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -31,18 +29,15 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import app.bryanlu.quizbowl.DBUtils;
-import app.bryanlu.quizbowl.QuestionParser;
 import app.bryanlu.quizbowl.QuestionReader;
 import app.bryanlu.quizbowl.R;
-import app.bryanlu.quizbowl.dbobjects.CategoryList;
-import app.bryanlu.quizbowl.dbobjects.GameRoom;
-import app.bryanlu.quizbowl.dbobjects.Question;
+import app.bryanlu.quizbowl.firebase.CategoryList;
+import app.bryanlu.quizbowl.firebase.GameRoom;
+import app.bryanlu.quizbowl.firebase.Question;
+import app.bryanlu.quizbowl.sqlite.QuestionPicker;
 
 import static app.bryanlu.quizbowl.MainActivity.mUser;
 
@@ -51,7 +46,7 @@ import static app.bryanlu.quizbowl.MainActivity.mUser;
  *
  * Fragment that allows users to play questions.
  */
-public class PlayFragment extends Fragment implements CategoryDialog.DialogListener {
+public class PlayFragment extends Fragment {
     public static final int POSITION = 1;
     private TextView answerText;
     private TextView scoreText;
@@ -64,8 +59,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
     private ImageView resultImageLeft;
     private ImageView resultImageRight;
 
-    private HashMap<String, ArrayList<Question>> questionSources = new HashMap<>();
-    private ArrayList<Question> questionList = new ArrayList<>();
+    private QuestionPicker picker;
     private Question currentQuestion;
     private int wordIndex;
     private ButtonState buttonState = ButtonState.NEXT;
@@ -89,16 +83,8 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View mView = inflater.inflate(R.layout.fragment_play, container, false);
-        getActivity().getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
-        Button categoriesButton = (Button) mView.findViewById(R.id.categoriesButton);
-        categoriesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showCategoriesDialog();
-            }
-        });
+        getActivity().getWindow()
+                .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         usernameText = (TextView) mView.findViewById(R.id.usernameText);
         DBUtils.getUsername(getActivity(), usernameText, getString(R.string.user_prefix));
@@ -106,6 +92,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
         String scoreString = getString(R.string.score) + Integer.toString(localScore);
         scoreText.setText(scoreString);
 
+        picker = new QuestionPicker(getContext());
         questionReader = (QuestionReader) mView.findViewById(R.id.questionReader);
         questionReader.setMovementMethod(new ScrollingMovementMethod());
         answerText = (TextView) mView.findViewById(R.id.answerText);
@@ -134,7 +121,6 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
         }
 
         listener = new PlayListener();
-        loadQuestions();
         GameUtils.checkForGameRoom();
         return mView;
     }
@@ -142,7 +128,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
     @Override
     public void onResume() {
         super.onResume();
-        changeCategoryImages(new ArrayList<String>());
+        //changeCategoryImages(new ArrayList<String>());
         if (isConnected()) {
             GameUtils.connectToGameRoom(this);
             gameRoomRef.addChildEventListener(listener);
@@ -176,14 +162,6 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
     }
 
     /**
-     * Creates questions for the device using an async task.
-     */
-    private void loadQuestions() {
-        SourceType[] types = SourceType.values();
-        new AddQuestionsTask().execute(types);
-    }
-
-    /**
      * Gets the question number, current question, and number of users from the database.
      */
     void initializeLocalGame() {
@@ -198,7 +176,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
 
                 CategoryList categoryList = dataSnapshot.child(GameRoom.CATEGORIES)
                         .getValue(CategoryList.class);
-                changeCategoryImages(categoryList.toArrayList());
+                //changeCategoryImages(categoryList.toArrayList());
                 String newText = Integer.toString(numCurrentUsers) + getString(R.string.connected);
                 connectedText.setText(newText);
             }
@@ -211,32 +189,6 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
     }
 
     /**
-     * Creates and shows the dialog for choosing question categories.
-     */
-    private void showCategoriesDialog() {
-        FragmentManager manager = this.getChildFragmentManager();
-        CategoryDialog oldDialog = (CategoryDialog) manager.findFragmentByTag(CategoryDialog.TAG);
-        if (oldDialog == null) {
-            CategoryDialog newDialog = new CategoryDialog();
-            newDialog.show(manager, CategoryDialog.TAG);
-        }
-        else {
-            oldDialog.show(manager, CategoryDialog.TAG);
-        }
-    }
-
-    /**
-     * Method needed to receive info from the category dialog.
-     * @param dialog dialog created by showCategoryDialog()
-     */
-    @Override
-    public void onDialogPositiveClick(CategoryDialog dialog) {
-        setQuestionList(dialog.getSelectedCategories());
-        ArrayList<String> selectedCategories = dialog.getSelectedCategories();
-        GameUtils.setCategories(new CategoryList(selectedCategories));
-    }
-
-    /**
      * Compares the selected categories to the full set to see which ones need to be colored
      * and which need to be greyed out.
      * @param selectedCategories question categories that were selected
@@ -246,7 +198,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
         for (SourceType type : types) {
             ImageView categoryImage = (ImageView) getActivity().findViewById(type.imageViewId);
             if (categoryImage != null) {
-                if (selectedCategories.contains(getString(type.key))) {
+                if (selectedCategories.contains(type.name())) {
                     categoryImage.setColorFilter(null);
                 }
                 else {
@@ -257,47 +209,11 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
     }
 
     /**
-     * Puts questions into the question list the app uses to select a question.
-     * @param selectedCategories question categories to put in the list
-     * @return true if successful, false if not
+     * Updates the question picker to have the right options chosen in the setup fragment.
+     * @param categories question categories chosen
      */
-    private boolean setQuestionList(ArrayList<String> selectedCategories) {
-        changeCategoryImages(selectedCategories);
-        questionList.clear();
-        if (selectedCategories.size() == 0) {
-            Toast.makeText(getContext(), "No questions selected.", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        else {
-            for (String category : selectedCategories) {
-                if (questionSources.get(category) == null) {
-                    Toast.makeText(getContext(), "Please try again.", Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-                else {
-                    questionList.addAll(questionSources.get(category));
-                    Toast.makeText(getContext(), "Categories set.", Toast.LENGTH_SHORT).show();
-                }
-            }
-            return true;
-        }
-    }
-
-    /**
-     * Sets a random question from the question list to be the current question.
-     * @return true if question was set, false if not
-     */
-    boolean setRandomQuestion() {
-        int index = (int) (Math.random() * questionList.size());
-        if (questionList.size() != 0) {
-            currentQuestion = questionList.get(index);
-            GameUtils.setDatabaseQuestion(currentQuestion);
-            return true;
-        }
-        else {
-            Toast.makeText(getContext(), "No questions selected.", Toast.LENGTH_SHORT).show();
-            return false;
-        }
+    public void updateParameters(ArrayList<String> categories) {
+        picker.setSelectedCategories(categories);
     }
 
     /**
@@ -330,10 +246,10 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
      */
     private void killQuestion() {
         buttonState = ButtonState.NEXT;
-        mainButton.setText(buttonState.text);
+        mainButton.setText(buttonState.name());
         questionReader.kill(isConnected());
         questionReader.setText(currentQuestion.getQuestion());
-        answerText.setText(currentQuestion.getAnswer());
+        answerText.setText(currentQuestion.getAnswer().replace("{", "").replace("}", ""));
         answerText.setVisibility(TextView.VISIBLE);
     }
 
@@ -349,7 +265,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
         else {
             Toast.makeText(getContext(), "You lost the buzzer race!", Toast.LENGTH_SHORT).show();
             buttonState = ButtonState.BUZZ;
-            mainButton.setText(buttonState.text);
+            mainButton.setText(buttonState.name());
         }
     }
 
@@ -451,7 +367,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
         answerEntry.getText().clear();
         answerText.setVisibility(TextView.INVISIBLE);
         buttonState = ButtonState.BUZZ;
-        mainButton.setText(buttonState.text);
+        mainButton.setText(buttonState.name());
     }
 
     /**
@@ -460,8 +376,8 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
     private void onMainButtonClick() {
         switch (buttonState) {
             case NEXT:
-                boolean questionSet = setRandomQuestion();
-                if (questionSet) {
+                currentQuestion = picker.getQuestion();
+                if (currentQuestion != null) {
                     resetGameScreen();
                     if (isConnected()) {
                         GameUtils.resetGameRoom();
@@ -474,7 +390,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
                 break;
             case BUZZ:
                 buttonState = ButtonState.SHOW;
-                mainButton.setText(buttonState.text);
+                mainButton.setText(buttonState.name());
                 if (isConnected()) {
                     GameUtils.tryBuzz(this);
                 }
@@ -505,29 +421,16 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
      * Contains the possible states for the main button in the Play fragment.
      */
     private enum ButtonState {
-        NEXT ("NEXT"), BUZZ ("BUZZ"), SHOW ("SHOW");
-        final String text;
-        ButtonState(String text) {
-            this.text = text;
-        }
+        NEXT, BUZZ, SHOW
     }
 
     /**
      * Has info for each of the asset files containing questions.
      */
-    private enum SourceType {
-        BIO (R.string.bioFile, R.string.bioKey, R.id.bioImage),
-        CHEM (R.string.chemFile, R.string.chemKey, R.id.chemImage),
-        GEOG (R.string.geoFile, R.string.geoKey, R.id.geoImage),
-        MATH (R.string.mathFile, R.string.mathKey, R.id.mathImage),
-        PHYS (R.string.physFile, R.string.physKey, R.id.physImage);
+    private enum SourceType {;
 
-        final int filePathId;
-        final int key;
         final int imageViewId;
-        SourceType(int filePathId, int key, int imageViewId) {
-            this.filePathId = filePathId;
-            this.key = key;
+        SourceType(int imageViewId) {
             this.imageViewId = imageViewId;
         }
     }
@@ -577,7 +480,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
                     break;
                 case GameRoom.CATEGORIES:
                     CategoryList categoryList = dataSnapshot.getValue(CategoryList.class);
-                    changeCategoryImages(categoryList.toArrayList());
+                    //changeCategoryImages(categoryList.toArrayList());
             }
         }
 
@@ -592,7 +495,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
                     numCurrentUsers = 0;
                     break;
                 case GameRoom.CATEGORIES:
-                    changeCategoryImages(new ArrayList<String>());
+                    //changeCategoryImages(new ArrayList<String>());
                     break;
             }
         }
@@ -662,7 +565,7 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
             if (questionInProgress) {
                 resetGameScreen();
                 buttonState = ButtonState.BUZZ;
-                mainButton.setText(buttonState.text);
+                mainButton.setText(buttonState.name());
             }
             else {
                 killQuestion();
@@ -687,30 +590,6 @@ public class PlayFragment extends Fragment implements CategoryDialog.DialogListe
             if (numCurrentUsers == numRestrictedUsers) {
                 GameUtils.setQuestionInProgress(false);
                 questionReader.setQuestionInProgress(false);
-            }
-        }
-    }
-
-    /**
-     * AsyncTask that adds questions to the question source hash map on a background thread.
-     */
-    private class AddQuestionsTask extends AsyncTask<SourceType, Void, Void> {
-        @Override
-        protected Void doInBackground(SourceType... types) {
-            try {
-                for (SourceType type : types) {
-                    String key = getString(type.key);
-                    String path = getString(type.filePathId);
-
-                    InputStream stream = getContext().getAssets().open(path);
-                    ArrayList<String> lines = QuestionParser.getLines(stream);
-                    ArrayList<Question> questions = QuestionParser.parseQuestions(lines);
-                    questionSources.put(key, questions);
-                }
-                return null;
-            } catch (IOException e) {
-                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                return null;
             }
         }
     }

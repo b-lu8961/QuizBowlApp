@@ -14,11 +14,11 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
-import app.bryanlu.quizbowl.dbobjects.CategoryList;
-import app.bryanlu.quizbowl.dbobjects.GameRoom;
-import app.bryanlu.quizbowl.dbobjects.Question;
-import app.bryanlu.quizbowl.dbobjects.Stats;
-import app.bryanlu.quizbowl.dbobjects.User;
+import app.bryanlu.quizbowl.firebase.CategoryList;
+import app.bryanlu.quizbowl.firebase.GameRoom;
+import app.bryanlu.quizbowl.firebase.Question;
+import app.bryanlu.quizbowl.firebase.Stats;
+import app.bryanlu.quizbowl.firebase.User;
 
 import static app.bryanlu.quizbowl.MainActivity.mDatabase;
 import static app.bryanlu.quizbowl.MainActivity.mUser;
@@ -244,7 +244,7 @@ public class GameUtils {
      * Sets the database's question to the question passed in.
      * @param currentQuestion question to update the database with
      */
-    static void setDatabaseQuestion(Question currentQuestion) {
+    public static void setDatabaseQuestion(Question currentQuestion) {
         gameroomRef.child(GameRoom.QUESTION).setValue(currentQuestion)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

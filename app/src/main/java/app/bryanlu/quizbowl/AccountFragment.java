@@ -34,8 +34,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-import app.bryanlu.quizbowl.dbobjects.Stats;
-import app.bryanlu.quizbowl.dbobjects.User;
+import app.bryanlu.quizbowl.firebase.Stats;
+import app.bryanlu.quizbowl.firebase.User;
 
 import static app.bryanlu.quizbowl.MainActivity.mAuth;
 import static app.bryanlu.quizbowl.MainActivity.mUser;
@@ -51,7 +51,7 @@ public class AccountFragment extends Fragment implements
         GoogleApiClient.OnConnectionFailedListener {
     public static final int POSITION = 1;
     private static final int RC_SIGN_IN = 9001;
-    private static final String TAG = "Google Sign-In Activity";
+    public static final String TAG = "Google Sign-In Activity";
 
     private TextView accountEmail;
     private TextView changeUsernameText;

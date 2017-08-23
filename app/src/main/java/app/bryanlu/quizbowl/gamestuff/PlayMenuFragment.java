@@ -21,8 +21,12 @@ import app.bryanlu.quizbowl.R;
 public class PlayMenuFragment extends Fragment {
     public static final int POSITION = 0;
     public static final String POSITION_KEY = "POSITION_KEY";
+    public static final String TAG = "PLAY_MENU_FRAGMENT";
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
+    private SetupFragment setupFragment = new SetupFragment();
+    private PlayFragment playFragment = new PlayFragment();
+    private ScoresFragment scoresFragment = new ScoresFragment();
     private ArrayList<String> selectedCategories;
 
     public PlayMenuFragment() {
@@ -35,7 +39,8 @@ public class PlayMenuFragment extends Fragment {
         View mView = inflater.inflate(R.layout.fragment_play_menu, container, false);
 
         mViewPager = (ViewPager) mView.findViewById(R.id.viewPager);
-        mViewPager.setAdapter(new PlayPagerAdapter(getFragmentManager()));
+        mViewPager.setAdapter(new PlayPagerAdapter(getFragmentManager(), setupFragment,
+                playFragment, scoresFragment));
 
         mTabLayout = (TabLayout) mView.findViewById(R.id.tabLayout);
         mTabLayout.setupWithViewPager(mViewPager);
@@ -58,7 +63,8 @@ public class PlayMenuFragment extends Fragment {
         }
     }
 
-    public void setSelectedCategories(ArrayList<String> categories) {
-        selectedCategories = categories;
+    public void updatePlayFragment(ArrayList<String> categories) {
+        playFragment.updateParameters(categories);
     }
+
 }

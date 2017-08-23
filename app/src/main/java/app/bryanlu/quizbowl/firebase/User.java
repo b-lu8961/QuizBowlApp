@@ -1,4 +1,4 @@
-package app.bryanlu.quizbowl.dbobjects;
+package app.bryanlu.quizbowl.firebase;
 
 /**
  * Created by Bryan Lu on 4/16/2017.

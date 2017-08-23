@@ -14,13 +14,13 @@ import app.bryanlu.quizbowl.R;
  * Helper class for the sqlite database of questions.
  */
 
-public class QuizBowlDbHelper extends SQLiteAssetHelper {
+class QuizBowlDbHelper extends SQLiteAssetHelper {
     private static final String DATABASE_PATH = "/data/data/app.bryanlu.quizbowl/databases";
     private static final String DATABASE_NAME = "Questions.db";
     private static final int DATABASE_VERSION = 1;
     private Context mContext;
 
-    public QuizBowlDbHelper(Context context) {
+    QuizBowlDbHelper(Context context) {
         super(context, DATABASE_NAME, DATABASE_PATH, null, DATABASE_VERSION);
         mContext = context;
         initializePreferences();

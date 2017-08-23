@@ -1,6 +1,5 @@
 package app.bryanlu.quizbowl;
 
-import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.content.res.Configuration;
 import android.support.v4.app.FragmentManager;
@@ -13,19 +12,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import app.bryanlu.quizbowl.dbobjects.Question;
 import app.bryanlu.quizbowl.gamestuff.PlayFragment;
 import app.bryanlu.quizbowl.gamestuff.PlayMenuFragment;
 import app.bryanlu.quizbowl.gamestuff.SetupFragment;
@@ -37,11 +31,8 @@ public class MainActivity extends AppCompatActivity
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private Fragment playMenuFragment;
-    private Fragment signInFragment;
+    private Fragment accountFragment;
     private Fragment statsFragment;
-    private final String PLAY_TAG = "PLAY_MENU_FRAGMENT";
-    private final String SIGN_IN_TAG = "SIGN_IN_FRAGMENT";
-    private final String STATS_TAG = "STATS_FRAGMENT";
     public static FirebaseAuth mAuth;
     public static FirebaseUser mUser;
     public static DatabaseReference mDatabase;
@@ -65,12 +56,12 @@ public class MainActivity extends AppCompatActivity
         mDatabase.child("questions").removeValue();
 
         playMenuFragment = new PlayMenuFragment();
-        signInFragment = new AccountFragment();
+        accountFragment = new AccountFragment();
         statsFragment = new StatsFragment();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.container, playMenuFragment, PLAY_TAG)
+                .add(R.id.container, playMenuFragment, PlayMenuFragment.TAG)
                 .commit();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -121,15 +112,15 @@ public class MainActivity extends AppCompatActivity
         switch(position) {
             case PlayMenuFragment.POSITION:
                 fragmentToUse = playMenuFragment;
-                tagToUse = PLAY_TAG;
+                tagToUse = PlayMenuFragment.TAG;
                 break;
             case AccountFragment.POSITION:
-                fragmentToUse = signInFragment;
-                tagToUse = SIGN_IN_TAG;
+                fragmentToUse = accountFragment;
+                tagToUse = AccountFragment.TAG;
                 break;
             case StatsFragment.POSITION:
                 fragmentToUse = statsFragment;
-                tagToUse = STATS_TAG;
+                tagToUse = StatsFragment.TAG;
                 break;
         }
 
@@ -164,10 +155,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onCategoryChange(ArrayList<String> categories) {
-        PlayMenuFragment fragment = (PlayMenuFragment)getSupportFragmentManager()
-                .findFragmentByTag(PLAY_TAG);
+        PlayMenuFragment fragment = (PlayMenuFragment) getSupportFragmentManager()
+                .findFragmentByTag(PlayMenuFragment.TAG);
 
-        fragment.setSelectedCategories(categories);
+        fragment.updatePlayFragment(categories);
     }
 }
 

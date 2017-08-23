@@ -37,7 +37,7 @@ public class SetupFragment extends Fragment {
         @Override
         public void onClick(View view) {
             CheckBox selected = (CheckBox)view;
-            String checkboxText = selected.getText().toString();
+            String checkboxText = selected.getText().toString().replace(" ", "");
 
             if (selected.isChecked()) {
                 selectedCategories.add(checkboxText);
@@ -48,7 +48,8 @@ public class SetupFragment extends Fragment {
             mCallback.onCategoryChange(selectedCategories);
         }
     };
-    OnCheckboxClickedListener mCallback;
+
+    private OnCheckboxClickedListener mCallback;
     public interface OnCheckboxClickedListener {
         void onCategoryChange(ArrayList<String> categories);
     }

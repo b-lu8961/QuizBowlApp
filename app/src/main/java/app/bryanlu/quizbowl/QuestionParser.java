@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import app.bryanlu.quizbowl.dbobjects.Question;
+import app.bryanlu.quizbowl.firebase.Question;
 
 /**
  * Created by Bryan Lu on 3/29/2017.

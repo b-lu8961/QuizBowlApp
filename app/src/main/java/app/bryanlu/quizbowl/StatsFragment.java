@@ -16,8 +16,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-import app.bryanlu.quizbowl.dbobjects.Stats;
-import app.bryanlu.quizbowl.dbobjects.User;
+import app.bryanlu.quizbowl.firebase.Stats;
+import app.bryanlu.quizbowl.firebase.User;
 
 import static app.bryanlu.quizbowl.MainActivity.mUser;
 import static app.bryanlu.quizbowl.MainActivity.mDatabase;
@@ -30,6 +30,7 @@ import static app.bryanlu.quizbowl.MainActivity.mDatabase;
 
 public class StatsFragment extends Fragment {
     public static final int POSITION = 2;
+    public static final String TAG = "STATS_FRAGMENT";
 
     private TextView usernameText;
     private TextView scoreText;

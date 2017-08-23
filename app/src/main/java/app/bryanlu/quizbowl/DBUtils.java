@@ -7,7 +7,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-import app.bryanlu.quizbowl.dbobjects.User;
+import app.bryanlu.quizbowl.firebase.User;
 
 import static app.bryanlu.quizbowl.MainActivity.mUser;
 import static app.bryanlu.quizbowl.MainActivity.mDatabase;

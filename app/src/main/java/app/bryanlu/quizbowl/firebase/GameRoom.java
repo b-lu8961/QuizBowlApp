@@ -1,4 +1,4 @@
-package app.bryanlu.quizbowl.dbobjects;
+package app.bryanlu.quizbowl.firebase;
 
 import java.util.ArrayList;
 import java.util.HashMap;

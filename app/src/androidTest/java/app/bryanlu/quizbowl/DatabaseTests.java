@@ -21,10 +21,10 @@ import org.junit.runner.RunWith;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import app.bryanlu.quizbowl.dbobjects.GameRoom;
-import app.bryanlu.quizbowl.dbobjects.Question;
-import app.bryanlu.quizbowl.dbobjects.Stats;
-import app.bryanlu.quizbowl.dbobjects.User;
+import app.bryanlu.quizbowl.firebase.GameRoom;
+import app.bryanlu.quizbowl.firebase.Question;
+import app.bryanlu.quizbowl.firebase.Stats;
+import app.bryanlu.quizbowl.firebase.User;
 
 import static org.junit.Assert.*;
 

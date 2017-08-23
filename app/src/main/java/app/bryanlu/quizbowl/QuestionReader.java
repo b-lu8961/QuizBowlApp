@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
-import app.bryanlu.quizbowl.dbobjects.Question;
+import app.bryanlu.quizbowl.firebase.Question;
 
 /**
  * Created by Bryan Lu on 4/4/2017.

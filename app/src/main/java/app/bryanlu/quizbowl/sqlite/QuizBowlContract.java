@@ -14,7 +14,7 @@ public final class QuizBowlContract {
 
     /* Inner class that describes table content */
     public static class BaseTable implements BaseColumns {
-        public static final String COLUMN_ID = "_id";
+        public static final String COLUMN_ID = "id";
         public static final String COLUMN_SUBCATEGORY = "subcategory";
         public static final String COLUMN_QUESTION = "question";
         public static final String COLUMN_ANSWER = "answer";
