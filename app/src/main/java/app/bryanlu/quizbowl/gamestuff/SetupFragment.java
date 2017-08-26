@@ -78,7 +78,7 @@ public class SetupFragment extends Fragment {
         @Override
         public void onClick(View view) {
             CheckBox selected = (CheckBox) view;
-            String tag = (String) selected.getTag();
+            String tag = (String) selected.getContentDescription();
             Category category = Category.findByName(selectedCategories, tag);
             String subcategory = selected.getText().toString();
 

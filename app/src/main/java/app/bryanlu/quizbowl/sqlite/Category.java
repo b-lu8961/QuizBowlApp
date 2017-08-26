@@ -51,6 +51,9 @@ public class Category {
             if (category.getName().equals(name)) {
                 return category;
             }
+            if (category.getName().equals(name.replace(" ", ""))) {
+                return category;
+            }
         }
         return null;
     }

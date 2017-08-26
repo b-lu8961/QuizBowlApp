@@ -36,7 +36,7 @@ public class QuestionPicker {
      * @param categories list of categories obtained from the Setup fragment
      */
     public void setSelectedCategories(ArrayList<Category> categories) {
-        selectedCategories.addAll(categories);
+        selectedCategories = categories;
         for (int i = 0; i < selectedCategories.size(); i++) {
             String category = selectedCategories.get(i).getName();
             if (category.contains(" ")) {
@@ -86,7 +86,7 @@ public class QuestionPicker {
      * @param tableName name of category to use
      * @return int id that represents a question (put into a String[])
      */
-    private String[] getSelectionArgs(String tableName) {
+    private String[] getQuestionId(String tableName) {
         int categoryMax = preferences.getInt(tableName, 0);
         int questionId = new java.util.Random().nextInt(categoryMax);
         return new String[] {Integer.toString(questionId)};
@@ -106,7 +106,7 @@ public class QuestionPicker {
         Cursor cursor;
         if (chosenCategory.getSubcategories().size() == 0) {
             String selection = QuizBowlContract.BaseTable.COLUMN_ID + " = ?";
-            String[] selectionArgs = getSelectionArgs(tableName);
+            String[] selectionArgs = getQuestionId(tableName);
             cursor = db.query(
                     tableName,
                     columns,
@@ -120,19 +120,20 @@ public class QuestionPicker {
             ArrayList<String> subcategoryList = chosenCategory.getSubcategories();
             for (int i = 0; i < subcategoryList.size(); i++) {
                 if (i < subcategoryList.size() - 1) {
-                    selection += subcategoryList.get(i) + " OR "
+                    selection += "? OR "
                             + QuizBowlContract.BaseTable.COLUMN_SUBCATEGORY + " = ";
                 }
                 else {
-                    selection += subcategoryList.get(i);
+                    selection += "?";
                 }
             }
-            selection += "ORDER BY RANDOM() LIMIT 1";
+            selection += " ORDER BY RANDOM() LIMIT 1";
             cursor = db.query(
                     tableName,
                     columns,
                     selection,
-                    null, null, null, null
+                    subcategoryList.toArray(new String[subcategoryList.size()]),
+                    null, null, null
             );
 
         }
