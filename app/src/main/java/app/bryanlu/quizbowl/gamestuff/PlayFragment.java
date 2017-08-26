@@ -37,6 +37,7 @@ import app.bryanlu.quizbowl.R;
 import app.bryanlu.quizbowl.firebase.CategoryList;
 import app.bryanlu.quizbowl.firebase.GameRoom;
 import app.bryanlu.quizbowl.firebase.Question;
+import app.bryanlu.quizbowl.sqlite.Category;
 import app.bryanlu.quizbowl.sqlite.QuestionPicker;
 
 import static app.bryanlu.quizbowl.MainActivity.mUser;
@@ -212,7 +213,7 @@ public class PlayFragment extends Fragment {
      * Updates the question picker to have the right options chosen in the setup fragment.
      * @param categories question categories chosen
      */
-    public void updateParameters(ArrayList<String> categories) {
+    public void updateParameters(ArrayList<Category> categories) {
         picker.setSelectedCategories(categories);
     }
 

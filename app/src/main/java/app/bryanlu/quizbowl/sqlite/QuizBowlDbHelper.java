@@ -14,13 +14,12 @@ import app.bryanlu.quizbowl.R;
  * Helper class for the sqlite database of questions.
  */
 
-class QuizBowlDbHelper extends SQLiteAssetHelper {
+public class QuizBowlDbHelper extends SQLiteAssetHelper {
     private static final String DATABASE_PATH = "/data/data/app.bryanlu.quizbowl/databases";
     private static final String DATABASE_NAME = "Questions.db";
     private static final int DATABASE_VERSION = 1;
     private Context mContext;
-
-    QuizBowlDbHelper(Context context) {
+    public QuizBowlDbHelper(Context context) {
         super(context, DATABASE_NAME, DATABASE_PATH, null, DATABASE_VERSION);
         mContext = context;
         initializePreferences();
@@ -31,6 +30,9 @@ class QuizBowlDbHelper extends SQLiteAssetHelper {
 
     }
 
+    /**
+     * Creates the shared preferences file that holds how many questions each category has.
+     */
     private void initializePreferences() {
         SharedPreferences preferences = mContext.getSharedPreferences(
                 mContext.getString(R.string.pref_file_key), Context.MODE_PRIVATE

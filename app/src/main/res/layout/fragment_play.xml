@@ -76,7 +76,7 @@
         android:layout_marginRight="8dp"
         android:ems="10"
         android:imeOptions="actionDone"
-        android:inputType="textPersonName"
+        android:inputType="textCapSentences"
         android:textSize="16sp"
         android:visibility="invisible"
         app:layout_constraintHorizontal_bias="0.505"

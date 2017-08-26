@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -19,7 +18,7 @@ import app.bryanlu.quizbowl.gamestuff.GameUtils;
 
 public class QuestionPicker {
     private Context mContext;
-    private ArrayList<String> selectedCategories;
+    private ArrayList<Category> selectedCategories = new ArrayList<>();
     private SharedPreferences preferences;
     private final String[] columns = {
             QuizBowlContract.BaseTable.COLUMN_QUESTION,
@@ -33,18 +32,25 @@ public class QuestionPicker {
     }
 
     /**
-     *
-     * @param categories
+     * Sets the correct categories to be available for use in question picking.
+     * @param categories list of categories obtained from the Setup fragment
      */
-    public void setSelectedCategories(ArrayList<String> categories) {
-        selectedCategories = categories;
+    public void setSelectedCategories(ArrayList<Category> categories) {
+        selectedCategories.addAll(categories);
+        for (int i = 0; i < selectedCategories.size(); i++) {
+            String category = selectedCategories.get(i).getName();
+            if (category.contains(" ")) {
+                selectedCategories.get(i).setName(category.replace(" ", ""));
+            }
+        }
         //GameUtils.setCategories(new CategoryList(selectedCategories));
     }
 
 
     /**
-     *
-     * @return
+     * Chooses a category from the selected ones. Weighted by how many questions are in the
+     * category.
+     * @return name of the category to pick a question from
      */
     private String chooseCategory() {
         String[] tableNames;
@@ -52,7 +58,10 @@ public class QuestionPicker {
             tableNames = mContext.getResources().getStringArray(R.array.table_names);
         }
         else {
-            tableNames = selectedCategories.toArray(new String[selectedCategories.size()]);
+            tableNames = new String[selectedCategories.size()];
+            for (int i = 0; i < selectedCategories.size(); i++) {
+                tableNames[i] = selectedCategories.get(i).getName();
+            }
         }
 
         int totalNumQuestions = 0;
@@ -83,24 +92,50 @@ public class QuestionPicker {
         return new String[] {Integer.toString(questionId)};
     }
 
+
+
     /**
-     * Sets a random question from the question list to be the current question.
-     * @return true if question was set, false if not
+     * Chooses a question from the database.
+     * @return the question chosen from the database
      */
     public Question getQuestion() {
         QuizBowlDbHelper helper = new QuizBowlDbHelper(mContext);
         String tableName = chooseCategory();
-        String selection = QuizBowlContract.BaseTable.COLUMN_ID + " = ?";
-        String[] selectionArgs = getSelectionArgs(tableName);
-
+        Category chosenCategory = Category.findByName(selectedCategories, tableName);
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.query(
-                tableName,
-                columns,
-                selection,
-                selectionArgs,
-                null, null, null
-        );
+        Cursor cursor;
+        if (chosenCategory.getSubcategories().size() == 0) {
+            String selection = QuizBowlContract.BaseTable.COLUMN_ID + " = ?";
+            String[] selectionArgs = getSelectionArgs(tableName);
+            cursor = db.query(
+                    tableName,
+                    columns,
+                    selection,
+                    selectionArgs,
+                    null, null, null
+            );
+        }
+        else {
+            String selection = QuizBowlContract.BaseTable.COLUMN_SUBCATEGORY + " = ";
+            ArrayList<String> subcategoryList = chosenCategory.getSubcategories();
+            for (int i = 0; i < subcategoryList.size(); i++) {
+                if (i < subcategoryList.size() - 1) {
+                    selection += subcategoryList.get(i) + " OR "
+                            + QuizBowlContract.BaseTable.COLUMN_SUBCATEGORY + " = ";
+                }
+                else {
+                    selection += subcategoryList.get(i);
+                }
+            }
+            selection += "ORDER BY RANDOM() LIMIT 1";
+            cursor = db.query(
+                    tableName,
+                    columns,
+                    selection,
+                    null, null, null, null
+            );
+
+        }
         String question = "";
         String answer = "";
         while (cursor.moveToNext()) {
@@ -111,10 +146,11 @@ public class QuestionPicker {
                     cursor.getColumnIndex(QuizBowlContract.BaseTable.COLUMN_ANSWER)
             );
         }
-        Question selectedQuestion = new Question(answer, question);
-        GameUtils.setDatabaseQuestion(selectedQuestion);
         cursor.close();
         db.close();
+
+        Question selectedQuestion = new Question(answer, question);
+        GameUtils.setDatabaseQuestion(selectedQuestion);
         return selectedQuestion;
     }
 }

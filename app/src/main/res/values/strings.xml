@@ -46,6 +46,7 @@
     <string name="sci_checkbox">Science</string>
     <string name="socSci_checkbox">Social Science</string>
     <string name="trash_checkbox">Trash</string>
+    <string name="subcategories">Subcategories</string>
     <string-array name="drawer_options">
         <item>Play</item>
         <item>Account</item>

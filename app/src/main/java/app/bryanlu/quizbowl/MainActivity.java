@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import app.bryanlu.quizbowl.gamestuff.PlayFragment;
 import app.bryanlu.quizbowl.gamestuff.PlayMenuFragment;
 import app.bryanlu.quizbowl.gamestuff.SetupFragment;
+import app.bryanlu.quizbowl.sqlite.Category;
 
 public class MainActivity extends AppCompatActivity
         implements SetupFragment.OnCheckboxClickedListener {
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         setupDrawer();
@@ -53,7 +56,6 @@ public class MainActivity extends AppCompatActivity
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("questions").removeValue();
 
         playMenuFragment = new PlayMenuFragment();
         accountFragment = new AccountFragment();
@@ -153,8 +155,13 @@ public class MainActivity extends AppCompatActivity
         mDrawerToggle.setDrawerIndicatorEnabled(true);
     }
 
+    /**
+     * Callback for the checkboxes in the Setup fragment. Calls for an update in the Play Menu
+     * fragment.
+     * @param categories updated list of categories
+     */
     @Override
-    public void onCategoryChange(ArrayList<String> categories) {
+    public void onCategoryChange(ArrayList<Category> categories) {
         PlayMenuFragment fragment = (PlayMenuFragment) getSupportFragmentManager()
                 .findFragmentByTag(PlayMenuFragment.TAG);
 

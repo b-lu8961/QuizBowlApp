@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import app.bryanlu.quizbowl.R;
+import app.bryanlu.quizbowl.sqlite.Category;
 
 /**
  * Created by Bryan Lu on 5/21/2017.
@@ -27,7 +28,6 @@ public class PlayMenuFragment extends Fragment {
     private SetupFragment setupFragment = new SetupFragment();
     private PlayFragment playFragment = new PlayFragment();
     private ScoresFragment scoresFragment = new ScoresFragment();
-    private ArrayList<String> selectedCategories;
 
     public PlayMenuFragment() {
         // Required default fragment constructor
@@ -63,7 +63,7 @@ public class PlayMenuFragment extends Fragment {
         }
     }
 
-    public void updatePlayFragment(ArrayList<String> categories) {
+    public void updatePlayFragment(ArrayList<Category> categories) {
         playFragment.updateParameters(categories);
     }
 
