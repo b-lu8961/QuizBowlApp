@@ -29,6 +29,10 @@ import app.bryanlu.quizbowl.sqlite.QuizBowlDbHelper;
 public class SetupFragment extends Fragment {
     public static final int POSITION = 0;
 
+    private CheckBox msCheckBox;
+    private CheckBox hsCheckBox;
+    private CheckBox collegeCheckBox;
+    private CheckBox openCheckBox;
     private CheckBox currentBox;
     private CheckBox artBox;
     private CheckBox geoBox;
@@ -42,6 +46,22 @@ public class SetupFragment extends Fragment {
     private CheckBox trashBox;
     private TextView subcategoryText;
     private LinearLayout subcategoryLayout;
+
+    private ArrayList<String> selectedDifficulties = new ArrayList<>();
+    private View.OnClickListener difficultyListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            CheckBox selected = (CheckBox) view;
+            String difficulty = selected.getText().toString();
+
+            if (selected.isChecked()) {
+                mCallback.onDifficultyChange(difficulty, true);
+            }
+            else {
+                mCallback.onDifficultyChange(difficulty, false);
+            }
+        }
+    };
 
     private ArrayList<Category> selectedCategories = new ArrayList<>();
     private View.OnClickListener categoryListener = new View.OnClickListener() {
@@ -100,6 +120,7 @@ public class SetupFragment extends Fragment {
     private OnCheckboxClickedListener mCallback;
     public interface OnCheckboxClickedListener {
         void onCategoryChange(ArrayList<Category> categories);
+        void onDifficultyChange(String difficulty, boolean add);
     }
 
     public SetupFragment() {
@@ -111,6 +132,10 @@ public class SetupFragment extends Fragment {
                              Bundle savedInstanceState) {
         View mView = inflater.inflate(R.layout.fragment_setup, container, false);
 
+        msCheckBox = (CheckBox) mView.findViewById(R.id.msCheckBox);
+        hsCheckBox = (CheckBox) mView.findViewById(R.id.hsCheckBox);
+        collegeCheckBox = (CheckBox) mView.findViewById(R.id.collegeCheckBox);
+        openCheckBox = (CheckBox) mView.findViewById(R.id.openCheckBox);
         currentBox = (CheckBox) mView.findViewById(R.id.currentCheckBox);
         artBox = (CheckBox) mView.findViewById(R.id.artCheckBox);
         geoBox = (CheckBox) mView.findViewById(R.id.geoCheckBox);
@@ -143,6 +168,11 @@ public class SetupFragment extends Fragment {
     }
 
     private void attachCategoryListeners() {
+        msCheckBox.setOnClickListener(difficultyListener);
+        hsCheckBox.setOnClickListener(difficultyListener);
+        collegeCheckBox.setOnClickListener(difficultyListener);
+        openCheckBox.setOnClickListener(difficultyListener);
+
         currentBox.setOnClickListener(categoryListener);
         artBox.setOnClickListener(categoryListener);
         geoBox.setOnClickListener(categoryListener);

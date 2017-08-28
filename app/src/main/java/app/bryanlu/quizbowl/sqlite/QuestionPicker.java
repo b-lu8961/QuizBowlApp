@@ -18,7 +18,9 @@ import app.bryanlu.quizbowl.gamestuff.GameUtils;
 
 public class QuestionPicker {
     private Context mContext;
+    private boolean simpleSelect = true;
     private ArrayList<Category> selectedCategories = new ArrayList<>();
+    private ArrayList<String> selectedDifficulties = new ArrayList<>();
     private SharedPreferences preferences;
     private final String[] columns = {
             QuizBowlContract.BaseTable.COLUMN_QUESTION,
@@ -31,6 +33,16 @@ public class QuestionPicker {
                 Context.MODE_PRIVATE);
     }
 
+    private void checkForSimpleSelect() {
+        if (selectedCategories.size() == 0) {
+            if (selectedDifficulties.size() == 0) {
+                simpleSelect = true;
+            }
+        }
+        else {
+            simpleSelect = false;
+        }
+    }
     /**
      * Sets the correct categories to be available for use in question picking.
      * @param categories list of categories obtained from the Setup fragment
@@ -43,9 +55,24 @@ public class QuestionPicker {
                 selectedCategories.get(i).setName(category.replace(" ", ""));
             }
         }
+        checkForSimpleSelect();
         //GameUtils.setCategories(new CategoryList(selectedCategories));
     }
 
+    /**
+     * Sets the correct difficulties to be available.
+     * @param difficulty difficulty level to update
+     * @param add true to add, false to remove
+     */
+    public void setSelectedDifficulties(String difficulty, boolean add) {
+        if (add) {
+            selectedDifficulties.add(difficulty);
+        }
+        else {
+            selectedDifficulties.remove(difficulty);
+        }
+        checkForSimpleSelect();
+    }
 
     /**
      * Chooses a category from the selected ones. Weighted by how many questions are in the
@@ -104,7 +131,7 @@ public class QuestionPicker {
         Category chosenCategory = Category.findByName(selectedCategories, tableName);
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor;
-        if (chosenCategory.getSubcategories().size() == 0) {
+        if (simpleSelect) {
             String selection = QuizBowlContract.BaseTable.COLUMN_ID + " = ?";
             String[] selectionArgs = getQuestionId(tableName);
             cursor = db.query(
@@ -116,23 +143,47 @@ public class QuestionPicker {
             );
         }
         else {
-            String selection = QuizBowlContract.BaseTable.COLUMN_SUBCATEGORY + " = ";
+            String selection = "";
+            ArrayList<String> selectionArgs = new ArrayList<>();
+
+            // Check for subcategories
             ArrayList<String> subcategoryList = chosenCategory.getSubcategories();
-            for (int i = 0; i < subcategoryList.size(); i++) {
-                if (i < subcategoryList.size() - 1) {
-                    selection += "? OR "
-                            + QuizBowlContract.BaseTable.COLUMN_SUBCATEGORY + " = ";
-                }
-                else {
-                    selection += "?";
+            if (subcategoryList.size() != 0) {
+                selection = "(" + QuizBowlContract.BaseTable.COLUMN_SUBCATEGORY + " = ";
+                for (int i = 0; i < subcategoryList.size(); i++) {
+                    if (i < subcategoryList.size() - 1) {
+                        selection += "? OR "
+                                + QuizBowlContract.BaseTable.COLUMN_SUBCATEGORY + " = ";
+                    }
+                    else {
+                        selection += "?)";
+                    }
+                    selectionArgs.add(subcategoryList.get(i));
                 }
             }
+
+            // Check for difficulties
+            if (selectedDifficulties.size() != 0) {
+                selection += subcategoryList.size() != 0 ? " AND " : "";
+                selection += "(" + QuizBowlContract.BaseTable.COLUMN_DIFFICULTY + " = ";
+                for (int i = 0; i < selectedDifficulties.size(); i++) {
+                    if (i < selectedDifficulties.size() - 1) {
+                        selection += "? OR "
+                                + QuizBowlContract.BaseTable.COLUMN_DIFFICULTY + " = ";
+                    }
+                    else {
+                        selection += "?)";
+                    }
+                    selectionArgs.add(selectedDifficulties.get(i));
+                }
+            }
+
             selection += " ORDER BY RANDOM() LIMIT 1";
             cursor = db.query(
                     tableName,
                     columns,
                     selection,
-                    subcategoryList.toArray(new String[subcategoryList.size()]),
+                    selectionArgs.toArray(new String[selectionArgs.size()]),
                     null, null, null
             );
 

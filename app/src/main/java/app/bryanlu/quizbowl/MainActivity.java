@@ -156,16 +156,27 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * Callback for the checkboxes in the Setup fragment. Calls for an update in the Play Menu
-     * fragment.
+     * Callback for the category & subcategory checkboxes in the Setup fragment. Calls for an
+     * update in the Play Menu fragment.
      * @param categories updated list of categories
      */
     @Override
     public void onCategoryChange(ArrayList<Category> categories) {
         PlayMenuFragment fragment = (PlayMenuFragment) getSupportFragmentManager()
                 .findFragmentByTag(PlayMenuFragment.TAG);
-
         fragment.updatePlayFragment(categories);
+    }
+
+    /**
+     * Callback for the difficulty checkboxes.
+     * @param difficulty difficulty to update
+     * @param add true to add, false to remove
+     */
+    @Override
+    public void onDifficultyChange(String difficulty, boolean add) {
+        PlayMenuFragment fragment = (PlayMenuFragment) getSupportFragmentManager()
+                .findFragmentByTag(PlayMenuFragment.TAG);
+        fragment.updatePlayFragment(difficulty, add);
     }
 }
 

@@ -66,5 +66,7 @@ public class PlayMenuFragment extends Fragment {
     public void updatePlayFragment(ArrayList<Category> categories) {
         playFragment.updateParameters(categories);
     }
-
+    public void updatePlayFragment(String difficulty, boolean add) {
+        playFragment.updateParameters(difficulty, add);
+    }
 }

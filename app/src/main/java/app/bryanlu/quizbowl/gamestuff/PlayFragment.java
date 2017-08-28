@@ -218,6 +218,15 @@ public class PlayFragment extends Fragment {
     }
 
     /**
+     * Updates the question picker to have the right difficulties available.
+     * @param difficulty difficulty to change
+     * @param add true to add, false to remove
+     */
+    public void updateParameters(String difficulty, boolean add) {
+        picker.setSelectedDifficulties(difficulty, add);
+    }
+
+    /**
      * Gets the question that is currently in the database's gameroom.
      * Uses a transaction to make sure currentQuestion is updated properly.
      */
