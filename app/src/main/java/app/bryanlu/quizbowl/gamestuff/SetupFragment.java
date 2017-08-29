@@ -47,7 +47,6 @@ public class SetupFragment extends Fragment {
     private TextView subcategoryText;
     private LinearLayout subcategoryLayout;
 
-    private ArrayList<String> selectedDifficulties = new ArrayList<>();
     private View.OnClickListener difficultyListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -77,7 +76,7 @@ public class SetupFragment extends Fragment {
 
             if (!selected.isChecked()) {
                 for (Category category : selectedCategories) {
-                    if (category.getName().equals(checkboxText)) {
+                    if (category.nameEquals(checkboxText)) {
                         selectedCategories.remove(category);
                         break;
                     }

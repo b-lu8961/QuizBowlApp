@@ -3,6 +3,7 @@ package app.bryanlu.quizbowl.sqlite;
 import java.util.ArrayList;
 
 /**
+ * Class that represents a category of questions.
  * Created by Bryan Lu on 8/25/2017.
  */
 
@@ -13,11 +14,6 @@ public class Category {
     public Category(String name) {
         this.name = name;
         subcategories = new ArrayList<>();
-    }
-
-    public Category(String name, ArrayList<String> subcategories) {
-        this.name = name;
-        this.subcategories = subcategories;
     }
 
     public void addSubcategory(String subcategory) {
@@ -36,7 +32,7 @@ public class Category {
         return name;
     }
 
-    public ArrayList<String> getSubcategories() {
+    ArrayList<String> getSubcategories() {
         return subcategories;
     }
 
@@ -58,4 +54,8 @@ public class Category {
         return null;
     }
 
+    public boolean nameEquals(String otherName) {
+        String nameNoSpace = name.replace(" ", "");
+        return nameNoSpace.equals(otherName.replace(" ", ""));
+    }
 }
